@@ -36,7 +36,7 @@ public class LineEngine : MonoBehaviour
 
     private async UniTaskVoid _UpdateLineRoot()
     {
-        var token = _tokenSrc.Token;
+        CancellationToken token = _tokenSrc.Token;
         while (!token.IsCancellationRequested)
         {
             _UpdateDirection();
@@ -48,7 +48,7 @@ public class LineEngine : MonoBehaviour
 
     private void _UpdateDirection()
     {
-        var horizontalInput = SimpleInput.GetAxis("Horizontal");
+        float horizontalInput = SimpleInput.GetAxis("Horizontal");
         var abs = (float)Unity.Mathematics.math.smoothstep(0.3, 1, Mathf.Abs(horizontalInput));
         float deg = abs * _angularSpeed * Time.deltaTime;
         deg *= Mathf.Sign(horizontalInput);

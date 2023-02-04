@@ -111,8 +111,8 @@ public class LineColliderGenerator : MonoBehaviour
         int positionCount = _lineRenderer.positionCount;
         for (var nodeIndex = 0; nodeIndex < positionCount - 1; nodeIndex++)
         {
-            Vector3 nodePos = _lineRenderer.GetPosition(nodeIndex);
-            Vector3 nextPos = _lineRenderer.GetPosition(nodeIndex + 1);
+            Vector3 nodePos = _GetLineNodePos(nodeIndex);
+            Vector3 nextPos = _GetLineNodePos(nodeIndex + 1);
             if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleScale)
                 continue;
             _validNodes.Add
@@ -128,4 +128,10 @@ public class LineColliderGenerator : MonoBehaviour
 
     private static Bounds _GetAabb(Vector3 pos, float size)
         => new Bounds(pos, new Vector3(size, size, size));
+
+    private Vector3 _GetLineNodePos(int index)
+    {
+        Vector3 pos = _lineRenderer.GetPosition(index);
+        return new Vector3(pos.x, pos.y, _lineRoot.position.z);
+    }
 }
