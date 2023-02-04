@@ -48,7 +48,7 @@ public class LineEngine : MonoBehaviour
 
     private void _UpdateDirection()
     {
-        var horizontalInput = SimpleInput.GetAxis("Horizontal");
+        var horizontalInput = SimpleInput.GetAxis("Horizontal") * -1;
         var abs = (float)Unity.Mathematics.math.smoothstep(0.3, 1, Mathf.Abs(horizontalInput));
         float deg = abs * _angularSpeed * Time.deltaTime;
         deg *= Mathf.Sign(horizontalInput);
