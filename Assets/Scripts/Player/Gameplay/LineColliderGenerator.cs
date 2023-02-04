@@ -5,12 +5,12 @@ using UnityEngine.Assertions;
 
 public class LineColliderGenerator : MonoBehaviour
 {
-    private readonly struct LineNode
+    private readonly struct Node
     {
         public readonly Vector3 Pos;
         public readonly Vector3 To;
 
-        public LineNode(Vector3 pos, Vector3 to)
+        public Node(Vector3 pos, Vector3 to)
         {
             Pos = pos;
             To = to;
@@ -26,7 +26,7 @@ public class LineColliderGenerator : MonoBehaviour
     private float _outerAabbSize;
 
     private readonly List<BoxCollider2D> _colliderPool = new List<BoxCollider2D>();
-    private readonly List<LineNode> _validNodes = new List<LineNode>();
+    private readonly List<Node> _validNodes = new List<Node>();
 
     private LineDrawerManager _lineDrawerManager;
     
@@ -44,7 +44,7 @@ public class LineColliderGenerator : MonoBehaviour
         Gizmos.color = Color.yellow;
         _DrawBoundsGizmos(outerAabb);
         Gizmos.color = Color.cyan;
-        foreach (LineNode node in _validNodes)
+        foreach (Node node in _validNodes)
         {
             _DrawNodeGizmos(node);
         }
@@ -71,7 +71,7 @@ public class LineColliderGenerator : MonoBehaviour
         Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0)); 
     }
 
-    private static void _DrawNodeGizmos(LineNode node)
+    private static void _DrawNodeGizmos(Node node)
     {
         Gizmos.DrawLine(node.Pos, node.To);
     }
@@ -89,7 +89,7 @@ public class LineColliderGenerator : MonoBehaviour
     private void _BindColliders()
     {
         var index = 0;
-        foreach (LineNode node in _validNodes)
+        foreach (Node node in _validNodes)
         {
             _BindCollider(node.Pos, node.To, index++);
         }
@@ -140,7 +140,7 @@ public class LineColliderGenerator : MonoBehaviour
                 continue;
             _validNodes.Add
             (
-                new LineNode
+                new Node
                 (
                     nodePos,
                     nextPos
