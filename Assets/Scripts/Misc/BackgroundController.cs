@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Misc
 {
@@ -13,6 +8,7 @@ namespace Assets.Scripts.Misc
         private Transform cameraTransform;
         private Vector3 lastCameraPosition;
         float textUnitSizeX;
+        float textUnitSizeY;
 
         private void Start()
         {
@@ -21,6 +17,7 @@ namespace Assets.Scripts.Misc
             Sprite sprite = GetComponent<SpriteRenderer>().sprite;
             Texture2D texture = sprite.texture;
             textUnitSizeX = texture.width / sprite.pixelsPerUnit;
+            textUnitSizeY = texture.height / sprite.pixelsPerUnit;
         }
 
         private void LateUpdate()
@@ -29,10 +26,15 @@ namespace Assets.Scripts.Misc
             transform.position += new Vector3( deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
             lastCameraPosition = cameraTransform.position;
 
-            if(cameraTransform.position.x - transform.position.x >= textUnitSizeX)
+            if(Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textUnitSizeX)
             {
                 float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textUnitSizeX;
                 transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
+            }
+            if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textUnitSizeX)
+            {
+                float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textUnitSizeY;
+                transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offsetPositionY);
             }
         }
     }
