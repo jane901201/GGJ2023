@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c9859c9be33974faa3f7881b7fbb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.01
+  _speed: 3
   _angularSpeed: 90
   _lineRootTransform: {fileID: 0}
   _collisionSender: {fileID: 0}
