@@ -36,19 +36,19 @@ public class LineEngine : MonoBehaviour
 
     private async UniTaskVoid _UpdateLineRoot()
     {
-        var token = _tokenSrc.Token;
+        CancellationToken token = _tokenSrc.Token;
         while (!token.IsCancellationRequested)
         {
             _UpdateDirection();
             Vector3 rootPos = _lineRootTransform.position;
-            _lineRootTransform.position = rootPos + _currentDirection * _speed;
+            _lineRootTransform.position = rootPos + _currentDirection * _speed * Time.deltaTime;
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }
 
     private void _UpdateDirection()
     {
-        var horizontalInput = SimpleInput.GetAxis("Horizontal") * -1;
+        float horizontalInput = SimpleInput.GetAxis("Horizontal") * -1;
         var abs = (float)Unity.Mathematics.math.smoothstep(0.3, 1, Mathf.Abs(horizontalInput));
         float deg = abs * _angularSpeed * Time.deltaTime;
         deg *= Mathf.Sign(horizontalInput);

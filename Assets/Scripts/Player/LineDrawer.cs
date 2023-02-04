@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Vector3 = UnityEngine.Vector3;
+
 public class LineDrawer : MonoBehaviour
 {
     [SerializeField]
@@ -14,15 +16,19 @@ public class LineDrawer : MonoBehaviour
 
     private void Start()
     {
-        _previousPos = _lineRoot.position;
+        _previousPos = _GetLinePos(_lineRoot.position);
         _lineRenderer.positionCount = 1;
         _lineRenderer.SetPosition(0, _previousPos);
     }
-    
+
+    private Vector3 _GetLinePos(Vector3 rootPos)
+        => new Vector3(rootPos.x, rootPos.y, transform.position.z);
+
     // Update is called once per frame
     private void Update()
     {
-        Vector3 position = _lineRoot.position;
+        Vector3 rootPos = _lineRoot.position;
+        Vector3 position = _GetLinePos(rootPos);
         _lineRenderer.startWidth = _lineRenderer.endWidth = _lineParameters.LineWidth;
         if (Vector3.Distance(_previousPos, position) > _lineParameters.LineInterval)
         {
