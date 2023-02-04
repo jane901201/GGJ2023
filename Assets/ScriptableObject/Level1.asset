@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b402b84b5c70c4bc4be43f80d5f74772, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  Pools:
+  - MinDepth: 0
+    MaxDepth: 1
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: 7438184ea0bfe4f7aa302165ed7a885a, type: 3}
+  - MinDepth: 0
+    MaxDepth: 100
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: 0c4b54d8ac0ccf3449e42e0b473cfd8b, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: dd83a61168556fd48b06e8ce8d374860, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: 59a503554e20181449afe9ed9c25e77f, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: efc97cb0d7538a245a0db32295465254, type: 3}
