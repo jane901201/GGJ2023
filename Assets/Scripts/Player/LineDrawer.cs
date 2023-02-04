@@ -1,31 +1,42 @@
+using System.Threading;
+
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 
 using Vector3 = UnityEngine.Vector3;
 
-public class LineDrawer : MonoBehaviour
+public class LineDrawer
 {
-    [SerializeField]
-    private LineParameters _lineParameters;
-   
-    [SerializeField]
+    private readonly LineParameters _lineParameters;
+    private readonly LineRenderer _lineRenderer;
+    
     private Transform _lineRoot;
     private Vector3 _previousPos;
-    
-    [SerializeField]
-    private LineRenderer _lineRenderer;
 
-    private void Start()
+    public LineDrawer(LineParameters parameters, LineRenderer lineRenderer)
     {
-        _previousPos = _GetLinePos(_lineRoot.position);
-        _lineRenderer.positionCount = 1;
-        _lineRenderer.SetPosition(0, _previousPos);
+        _lineParameters = parameters;
+        _lineRenderer = lineRenderer;
     }
 
-    private Vector3 _GetLinePos(Vector3 rootPos)
-        => new Vector3(rootPos.x, rootPos.y, transform.position.z);
+    public async UniTaskVoid Draw(CancellationToken token, Transform lineRoot)
+    {
+        _lineRoot = lineRoot;
+        _previousPos = _GetLinePos(_lineRoot.position);
+        int positionCount = ++_lineRenderer.positionCount;
+        _lineRenderer.SetPosition(positionCount - 1, _previousPos);
+        while (!token.IsCancellationRequested)
+        {
+            _Update();
+            await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+    }
 
-    // Update is called once per frame
-    private void Update()
+    private static Vector3 _GetLinePos(Vector3 rootPos)
+        => new Vector3(rootPos.x, rootPos.y, 0);
+
+    private void _Update()
     {
         Vector3 rootPos = _lineRoot.position;
         Vector3 position = _GetLinePos(rootPos);

@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 
-public class LineEngine : MonoBehaviour
+public class LineRootEngine : MonoBehaviour
 {
     [SerializeField]
     [Min(0)]
@@ -18,20 +18,19 @@ public class LineEngine : MonoBehaviour
     [SerializeField]
     private Transform _lineRootTransform;
     private CancellationTokenSource _tokenSrc;
-    [SerializeField]
-    private CollisionSender _collisionSender;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Fire()
     {
         _tokenSrc = new CancellationTokenSource();
         _currentDirection = new Vector3(0, -1, 0);
         _UpdateLineRoot().Forget();
-        _collisionSender.OnCollideToDeath += () =>
-        {
-            _tokenSrc.Cancel();
-            Debug.Log("Death!!");
-        };
+    }
+
+    public void Stop()
+    {
+        _tokenSrc?.Cancel();
+        _tokenSrc?.Dispose();
+        _tokenSrc = null;
     }
 
     private async UniTaskVoid _UpdateLineRoot()
@@ -56,9 +55,9 @@ public class LineEngine : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
-        if(!_tokenSrc.IsCancellationRequested)
-            _tokenSrc.Cancel();
-        _tokenSrc.Dispose();
+    { 
+        _tokenSrc?.Cancel();
+        _tokenSrc?.Dispose();
+        _tokenSrc = null;
     }
 }
