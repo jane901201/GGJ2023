@@ -21,14 +21,28 @@ public class SceneObjectSetting : ScriptableObject
             {
                 return null;
             }
-            return validObjs[Random.Range(0, validObjs.Count)];
+            
+            int totalWeight = validObjs.Sum(obj => obj.Weight);
+            var rand = Random.Range(0, totalWeight);
+
+            var acc = 0;
+            for (int i = 0 ; i < validObjs.Count ; i++)
+            {
+                acc = acc + validObjs[i].Weight;
+                if (acc > rand)
+                {
+                    return validObjs[i];
+                }
+            }
+            return validObjs[0];
         }
     }
 
     [System.Serializable]
     public class SceneObject
     {
-        public Vector2Int Size;
+        public Vector2Int Size = new Vector2Int(1, 1);
+        public int Weight = 1;
         public GameObject Prefab;
     }
 

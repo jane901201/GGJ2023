@@ -17,17 +17,20 @@ MonoBehaviour:
     MaxDepth: 100
     Objects:
     - Size: {x: 1, y: 1}
-      Prefab: {fileID: 8624289974819160961, guid: c41e84a866b3c44c0a260311af2d00dd, type: 3}
-    - Size: {x: 1, y: 2}
-      Prefab: {fileID: 7942301093364949132, guid: a3c3ba13ae4904ebcafe764c1acec9aa, type: 3}
-    - Size: {x: 2, y: 1}
-      Prefab: {fileID: 1962624375965927299, guid: ebb2450aee9104943b6481a467f615f7, type: 3}
+      Weight: 1
+      Prefab: {fileID: 483584334095371402, guid: ebb2450aee9104943b6481a467f615f7, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 3
+      Prefab: {fileID: 483584334095371402, guid: 0120adfe32a27457db0b8ea07292e367, type: 3}
   - MinDepth: 0
     MaxDepth: 10
     Objects:
     - Size: {x: 1, y: 1}
+      Weight: 1
       Prefab: {fileID: 8624289974819160961, guid: c41e84a866b3c44c0a260311af2d00dd, type: 3}
     - Size: {x: 1, y: 2}
+      Weight: 1
       Prefab: {fileID: 7942301093364949132, guid: a3c3ba13ae4904ebcafe764c1acec9aa, type: 3}
     - Size: {x: 2, y: 1}
+      Weight: 1
       Prefab: {fileID: 1962624375965927299, guid: ebb2450aee9104943b6481a467f615f7, type: 3}
