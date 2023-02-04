@@ -29,8 +29,7 @@ public class LineColliderGenerator : MonoBehaviour
     private readonly List<LineNode> _validNodes = new List<LineNode>();
 
     private LineDrawerManager _lineDrawerManager;
-
-
+    
     public void Initialize(LineDrawerManager lineDrawerManager)
     {
         _lineDrawerManager = lineDrawerManager;
@@ -124,9 +123,9 @@ public class LineColliderGenerator : MonoBehaviour
         Vector3 rootPos = _lineRoot.transform.position;
         Bounds outerAabb = _GetAabb(rootPos, _outerAabbSize);
         List<LineRenderer> renderers = _lineDrawerManager.GetLineRenderers(outerAabb);
-        foreach (LineRenderer renderer in renderers)
+        foreach (LineRenderer lineRenderer in renderers)
         {
-            _BoundPointsInRenderer(renderer, outerAabb, rootPos);
+            _BoundPointsInRenderer(lineRenderer, outerAabb, rootPos);
         }
     }
 

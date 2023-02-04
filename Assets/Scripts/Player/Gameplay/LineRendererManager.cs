@@ -1,14 +1,10 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 
 public class LineRendererManager : MonoBehaviour
 {
     [SerializeField]
     private LineRenderer _template;
-    
-    private readonly List<LineRenderer> _pool = new List<LineRenderer>();
-    
+
     private bool _taken;
     
     private void Awake()
@@ -16,7 +12,6 @@ public class LineRendererManager : MonoBehaviour
         _template.enabled = false;
         _template.positionCount = 0;
         _template.useWorldSpace = false;
-        _pool.Add(_template);
     }
 
     public LineRenderer GetLineRenderer()
@@ -32,7 +27,6 @@ public class LineRendererManager : MonoBehaviour
         var lineRenderer = newGo.AddComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         lineRenderer.useWorldSpace = false;
-        _pool.Add(lineRenderer);
         return lineRenderer;
     }
 }

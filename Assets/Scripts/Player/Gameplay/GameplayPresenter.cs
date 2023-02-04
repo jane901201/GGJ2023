@@ -20,12 +20,13 @@ public class GameplayPresenter : MonoBehaviour
         _view.StartGameplaySession(new Vector3(_x++, 0, 0), new Vector3(0, -1, 0));
     }
 
-    void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.H))
+        if (!Input.GetKeyDown(KeyCode.H))
         {
-            _view.StopGameplaySession();
-            _view.StartGameplaySession(new Vector3(_x++, 0, 0), new Vector3(0, -1, 0));
+            return;
         }
+        _view.StopGameplaySession();
+        _view.StartGameplaySession(new Vector3(_x++, 0, 0), new Vector3(0, -1, 0));
     }
 }
