@@ -12,8 +12,9 @@ public class GameplayPresenter : MonoBehaviour
         _collisionSender.OnCollideToSomething += () =>
         {
             Debug.Log("Collide!!");
-            _view.StopGame();
+            _view.StopGameplaySession();
         };
-        _view.StartGame();
+        _view.Initialize();
+        _view.StartGameplaySession(new Vector3(0, 0, 0));
     }
 }

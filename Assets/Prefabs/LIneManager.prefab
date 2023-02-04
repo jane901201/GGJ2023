@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 364432051352568540}
   - component: {fileID: 364432051352568541}
-  - component: {fileID: 364432051352568538}
   - component: {fileID: 364432051352568537}
   - component: {fileID: 5142997723994397625}
   m_Layer: 0
@@ -49,22 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LineWidth: 0.5
   LineInterval: 1
-  CircleScale: 0.5
---- !u!114 &364432051352568538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 364432051352568536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6ff51c7e4f622448d80ed34f0562ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lineParameters: {fileID: 364432051352568541}
-  _lineRoot: {fileID: 0}
-  _lineRenderer: {fileID: 0}
+  CircleRadius: 0.5
+  LineColliderWidth: 0.5
+  CircleColliderRadius: 0.5
 --- !u!114 &364432051352568537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac19edfad2fd514f82192d3227ae912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineRoot: {fileID: 0}
-  _collider: {fileID: 0}
+  _lineRootCircle: {fileID: 0}
+  _lineRenderer: {fileID: 0}
   _parameters: {fileID: 364432051352568541}
+  _circleCollider: {fileID: 0}

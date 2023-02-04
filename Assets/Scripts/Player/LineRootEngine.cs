@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 
-public class LineEngine : MonoBehaviour
+public class LineRootEngine : MonoBehaviour
 {
     [SerializeField]
     [Min(0)]
@@ -28,7 +28,9 @@ public class LineEngine : MonoBehaviour
 
     public void Stop()
     {
-        _tokenSrc.Cancel();
+        _tokenSrc?.Cancel();
+        _tokenSrc?.Dispose();
+        _tokenSrc = null;
     }
 
     private async UniTaskVoid _UpdateLineRoot()
@@ -53,9 +55,9 @@ public class LineEngine : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
-        if(!_tokenSrc.IsCancellationRequested)
-            _tokenSrc.Cancel();
-        _tokenSrc.Dispose();
+    { 
+        _tokenSrc?.Cancel();
+        _tokenSrc?.Dispose();
+        _tokenSrc = null;
     }
 }
