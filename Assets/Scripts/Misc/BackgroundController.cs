@@ -1,26 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BackgroundController : MonoBehaviour
+namespace Assets.Scripts.Misc
 {
-    public GameObject[] backGrounds;
-    public Transform player;
-    public float speed = 1.0f;
-
-    void Update()
+    class BackgroundController : MonoBehaviour
     {
-        foreach (var go in backGrounds)
+        public Vector2 parallaxEffectMultiplier;
+        private Transform cameraTransform;
+        private Vector3 lastCameraPosition;
+        float textUnitSizeX;
+        float textUnitSizeY;
+
+        private void Start()
         {
-            go.transform.Translate(new Vector3(player.forward.x, player.forward.y, 0));
-            if (go.transform.position.y < player.position.y)
+            cameraTransform = Camera.main.transform;
+            lastCameraPosition = cameraTransform.position;
+            Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+            Texture2D texture = sprite.texture;
+            textUnitSizeX = texture.width / sprite.pixelsPerUnit;
+            textUnitSizeY = texture.height / sprite.pixelsPerUnit;
+        }
+
+        private void LateUpdate()
+        {
+            Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
+            transform.position += new Vector3( deltaMovement.x * parallaxEffectMultiplier.x, deltaMovement.y * parallaxEffectMultiplier.y);
+            lastCameraPosition = cameraTransform.position;
+
+            if(Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textUnitSizeX)
             {
-                go.transform.SetPositionAndRotation(new Vector3(0, go.transform.position.y, 0), Quaternion.identity);
+                float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textUnitSizeX;
+                transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
             }
-            //if (go.transform.position.x < player.position.x)
-            //{
-            //    go.transform.SetPositionAndRotation(new Vector3(go.transform.position.x, 0, 0), Quaternion.identity);
-            //}
+            if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textUnitSizeX)
+            {
+                float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textUnitSizeY;
+                transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offsetPositionY);
+            }
         }
     }
 }
