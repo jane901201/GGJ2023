@@ -32,6 +32,8 @@ public class LineColliderGenerator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (_lineRoot == null)
+            return;
         Vector3 rootPos = _lineRoot.transform.position;
         Bounds outerAabb = _GetAabb(rootPos, _outerAabbSize);
         Gizmos.color = Color.yellow;
@@ -45,7 +47,7 @@ public class LineColliderGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        Assert.IsTrue(_outerAabbSize > _lineParameters.CircleScale);
+        Assert.IsTrue(_outerAabbSize > _lineParameters.CircleRadius);
     }
 
     private static void _DrawBoundsGizmos(Bounds aabb)
@@ -113,7 +115,7 @@ public class LineColliderGenerator : MonoBehaviour
         {
             Vector3 nodePos = _GetLineNodePos(nodeIndex);
             Vector3 nextPos = _GetLineNodePos(nodeIndex + 1);
-            if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleScale)
+            if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleRadius)
                 continue;
             _validNodes.Add
             (

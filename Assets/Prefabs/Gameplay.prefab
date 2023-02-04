@@ -75,7 +75,8 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 1.44, z: 0}
+  - {x: -0.87, y: 2.2, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -262,6 +263,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4689207609309145808, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
   m_PrefabInstance: {fileID: 5692469993148367925}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5037579212455803843 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+  m_PrefabInstance: {fileID: 5692469993148367925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6542006035053401347 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1456466564059238710, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
@@ -292,6 +298,10 @@ PrefabInstance:
       propertyPath: _lineRenderer
       value: 
       objectReference: {fileID: 7968977780680538067}
+    - target: {fileID: 364432051352568537, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: _outerAabbSize
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 364432051352568538, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
       propertyPath: _lineRoot
       value: 
@@ -344,6 +354,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364432051352568541, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: LineWidth
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 364432051352568541, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: CircleRadius
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 364432051352568541, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: CircleColliderRadius
+      value: 0.84
+      objectReference: {fileID: 0}
     - target: {fileID: 5142997723994397625, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
       propertyPath: _collider
       value: 
@@ -352,6 +374,18 @@ PrefabInstance:
       propertyPath: _lineRoot
       value: 
       objectReference: {fileID: 1147536326883798757}
+    - target: {fileID: 5142997723994397625, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: _lineRenderer
+      value: 
+      objectReference: {fileID: 7968977780680538067}
+    - target: {fileID: 5142997723994397625, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: _circleCollider
+      value: 
+      objectReference: {fileID: 902634813121505326}
+    - target: {fileID: 5142997723994397625, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
+      propertyPath: _lineRootCircle
+      value: 
+      objectReference: {fileID: 5037579212455803843}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 984d52e85aed6874fa8f3d29079e386d, type: 3}
 --- !u!4 &6115458936701991776 stripped
