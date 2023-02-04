@@ -8,12 +8,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private SceneObjectSetting _sceneObjectSetting;
 
     [SerializeField] private List<Vector2Int> _generatedRange = new List<Vector2Int>();
-    [SerializeField] private float _unitLength = 100f;
+    [SerializeField] private float _unitLength = 3f;
     [SerializeField] private Vector2Int _generatedBounds = new Vector2Int(5, 10);
 
     [SerializeField] private int _generateThreshold = 1;
 
-    [SerializeField] private Vector2 _fakeCurrentPlayerPos = new Vector2(0f, 0f);
+    [Header("Player Object")]
     [SerializeField] private GameObject _obj;
 
     // Start is called before the first frame update
@@ -32,16 +32,15 @@ public class LevelManager : MonoBehaviour
     {
         while (true)
         {
-            // TODO: get current player position
-            var currentPlayerPos = _obj.transform.position;// _fakeCurrentPlayerPos;
+            var currentPlayerPos = _obj.transform.position;
             var grid = _ConvertToGridUnit(currentPlayerPos);
-            Debug.Log(grid);
+            // Debug.Log(grid);
 
             var minBound = grid - _generatedBounds;
             minBound.y = Mathf.Max(0, minBound.y);
             var maxBound = grid + _generatedBounds;
-            Debug.Log(minBound);
-            Debug.Log(maxBound);
+            // Debug.Log(minBound);
+            // Debug.Log(maxBound);
 
             int xMin = minBound.x;
             int xMax = maxBound.x;
@@ -80,7 +79,7 @@ public class LevelManager : MonoBehaviour
                             rightMaxBound = xMin;
 
                             var obj = GameObject.Instantiate(sceneObject.Prefab);
-                            obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, yMin + sceneObject.Size.y/2f) * _unitLength;
+                            obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, -(yMin + sceneObject.Size.y/2f)) * _unitLength;
 
                             leftMinBound = leftMinBound - 1;
                             rightMaxBound = rightMaxBound + sceneObject.Size.x;
@@ -104,7 +103,7 @@ public class LevelManager : MonoBehaviour
                             if (sceneObject1 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject1.Prefab);
-                                obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, yMin + sceneObject1.Size.y/2f) * _unitLength;
+                                obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, -(yMin + sceneObject1.Size.y/2f)) * _unitLength;
 
                                 leftMinBound = leftMinBound - sceneObject1.Size.x;
 
@@ -127,7 +126,7 @@ public class LevelManager : MonoBehaviour
                             if (sceneObject2 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject2.Prefab);
-                                obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, yMin + sceneObject2.Size.y/2f) * _unitLength;
+                                obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, -(yMin + sceneObject2.Size.y/2f)) * _unitLength;
 
                                 rightMaxBound = rightMaxBound + sceneObject2.Size.x;
 
@@ -175,6 +174,6 @@ public class LevelManager : MonoBehaviour
 
     private Vector2Int _ConvertToGridUnit(Vector2 pos)
     {
-        return new Vector2Int((int)(pos.x/_unitLength), (int)(pos.y/_unitLength));
+        return new Vector2Int((int)(pos.x/_unitLength), -(int)(pos.y/_unitLength));
     }
 }
