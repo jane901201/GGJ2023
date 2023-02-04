@@ -1,19 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 using UnityEngine.Assertions;
-
-using Debug = System.Diagnostics.Debug;
 
 public class LineColliderGenerator : MonoBehaviour
 {
     private readonly struct LineNode
     {
         public readonly Vector3 Pos;
-        public readonly Vector3? To;
+        public readonly Vector3 To;
 
-        public LineNode(Vector3 pos, Vector3? to)
+        public LineNode(Vector3 pos, Vector3 to)
         {
             Pos = pos;
             To = to;
@@ -28,9 +25,6 @@ public class LineColliderGenerator : MonoBehaviour
     [Min(0.001f)]
     private float _outerAabbSize;
     [SerializeField]
-    [Min(0.001f)]
-    private float _innerAabbSize;
-    [SerializeField]
     private LineRenderer _lineRenderer;
 
     private readonly List<BoxCollider2D> _colliderPool = new List<BoxCollider2D>();
@@ -40,11 +34,8 @@ public class LineColliderGenerator : MonoBehaviour
     {
         Vector3 rootPos = _lineRoot.transform.position;
         Bounds outerAabb = _GetAabb(rootPos, _outerAabbSize);
-        Bounds innerAabb = _GetAabb(rootPos, _innerAabbSize);
         Gizmos.color = Color.yellow;
         _DrawBoundsGizmos(outerAabb);
-        Gizmos.color = Color.red;
-        _DrawBoundsGizmos(innerAabb);
         Gizmos.color = Color.cyan;
         foreach (LineNode node in _validNodes)
         {
@@ -54,7 +45,7 @@ public class LineColliderGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        Assert.IsTrue(_outerAabbSize > _innerAabbSize);
+        Assert.IsTrue(_outerAabbSize > _lineParameters.CircleScale);
     }
 
     private static void _DrawBoundsGizmos(Bounds aabb)
@@ -68,9 +59,7 @@ public class LineColliderGenerator : MonoBehaviour
 
     private static void _DrawNodeGizmos(LineNode node)
     {
-        if (node.To == null)
-            return;
-        Gizmos.DrawLine(node.Pos, node.To.Value);
+        Gizmos.DrawLine(node.Pos, node.To);
     }
 
     // Update is called once per frame
@@ -86,10 +75,9 @@ public class LineColliderGenerator : MonoBehaviour
     private void _BindColliders()
     {
         var index = 0;
-        foreach (LineNode node in _validNodes.Where(node => node.To != null))
+        foreach (LineNode node in _validNodes)
         {
-            Debug.Assert(node.To != null, "node.To != null");
-            _BindCollider(node.Pos, node.To.Value, index++);
+            _BindCollider(node.Pos, node.To, index++);
         }
 
         for (; index < _colliderPool.Count; index++)
@@ -110,9 +98,9 @@ public class LineColliderGenerator : MonoBehaviour
         BoxCollider2D coll = _colliderPool[index];
         coll.enabled = true;
         Vector3 center = Vector3.Lerp(from, to, 0.5f);
-        coll.size = new Vector2(Vector3.Distance(from, to), _lineParameters.LineInterval);
+        coll.size = new Vector2(Vector3.Distance(from, to), _lineParameters.LineWidth);
         coll.transform.position = center;
-        float angle = Vector3.Angle(to - from, Vector3.left);
+        float angle = Vector3.Angle(to - from, Vector3.right);
         coll.transform.eulerAngles = new Vector3(0, 0, angle);
     }
 
@@ -120,19 +108,19 @@ public class LineColliderGenerator : MonoBehaviour
     {
         Vector3 rootPos = _lineRoot.transform.position;
         Bounds outerAabb = _GetAabb(rootPos, _outerAabbSize);
-        Bounds innerAabb = _GetAabb(rootPos, _innerAabbSize);
         int positionCount = _lineRenderer.positionCount;
-        for (var nodeIndex = 0; nodeIndex < positionCount; nodeIndex++)
+        for (var nodeIndex = 0; nodeIndex < positionCount - 1; nodeIndex++)
         {
             Vector3 nodePos = _lineRenderer.GetPosition(nodeIndex);
-            if (!outerAabb.Contains(nodePos) || innerAabb.Contains(nodePos))
+            Vector3 nextPos = _lineRenderer.GetPosition(nodeIndex + 1);
+            if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleScale)
                 continue;
             _validNodes.Add
             (
                 new LineNode
                 (
                     nodePos,
-                    nodeIndex == positionCount - 1 ? null : _lineRenderer.GetPosition(nodeIndex + 1)
+                    nextPos 
                 )
             );
         } 
