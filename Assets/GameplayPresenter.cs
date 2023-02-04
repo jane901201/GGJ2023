@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameplayPresenter : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private GameplayView _view;
 
-    private int _x = 0;
+    private int _x;
     
     public void Start()
     {

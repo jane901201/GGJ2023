@@ -24,11 +24,17 @@ public class LineColliderGenerator : MonoBehaviour
     [SerializeField]
     [Min(0.001f)]
     private float _outerAabbSize;
-    [SerializeField]
-    private LineRenderer _lineRenderer;
 
     private readonly List<BoxCollider2D> _colliderPool = new List<BoxCollider2D>();
     private readonly List<LineNode> _validNodes = new List<LineNode>();
+
+    private LineDrawerManager _lineDrawerManager;
+
+
+    public void Initialize(LineDrawerManager lineDrawerManager)
+    {
+        _lineDrawerManager = lineDrawerManager;
+    }
 
     private void OnDrawGizmos()
     {
@@ -42,6 +48,13 @@ public class LineColliderGenerator : MonoBehaviour
         foreach (LineNode node in _validNodes)
         {
             _DrawNodeGizmos(node);
+        }
+        Gizmos.color = Color.blue;
+        if (_lineDrawerManager == null)
+            return;
+        foreach (Bounds bounds in _lineDrawerManager.LineBounds)
+        {
+            _DrawBoundsGizmos(bounds);
         }
     }
 
@@ -110,11 +123,20 @@ public class LineColliderGenerator : MonoBehaviour
     {
         Vector3 rootPos = _lineRoot.transform.position;
         Bounds outerAabb = _GetAabb(rootPos, _outerAabbSize);
-        int positionCount = _lineRenderer.positionCount;
+        List<LineRenderer> renderers = _lineDrawerManager.GetLineRenderers(outerAabb);
+        foreach (LineRenderer renderer in renderers)
+        {
+            _BoundPointsInRenderer(renderer, outerAabb, rootPos);
+        }
+    }
+
+    private void _BoundPointsInRenderer(LineRenderer lineRenderer, Bounds outerAabb, Vector3 rootPos)
+    {
+        int positionCount = lineRenderer.positionCount;
         for (var nodeIndex = 0; nodeIndex < positionCount - 1; nodeIndex++)
         {
-            Vector3 nodePos = _GetLineNodePos(nodeIndex);
-            Vector3 nextPos = _GetLineNodePos(nodeIndex + 1);
+            Vector3 nodePos = _GetLineNodePos(lineRenderer, nodeIndex);
+            Vector3 nextPos = _GetLineNodePos(lineRenderer, nodeIndex + 1);
             if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleRadius)
                 continue;
             _validNodes.Add
@@ -122,18 +144,18 @@ public class LineColliderGenerator : MonoBehaviour
                 new LineNode
                 (
                     nodePos,
-                    nextPos 
+                    nextPos
                 )
             );
-        } 
+        }  
     }
 
     private static Bounds _GetAabb(Vector3 pos, float size)
         => new Bounds(pos, new Vector3(size, size, size));
 
-    private Vector3 _GetLineNodePos(int index)
+    private Vector3 _GetLineNodePos(LineRenderer lineRenderer, int index)
     {
-        Vector3 pos = _lineRenderer.GetPosition(index);
+        Vector3 pos = lineRenderer.GetPosition(index);
         return new Vector3(pos.x, pos.y, _lineRoot.position.z);
     }
 }

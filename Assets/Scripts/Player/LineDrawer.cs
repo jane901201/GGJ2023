@@ -10,6 +10,7 @@ public class LineDrawer
 {
     private readonly LineParameters _lineParameters;
     private readonly LineRenderer _lineRenderer;
+    public Bounds Aabb;
     
     private Transform _lineRoot;
     private Vector3 _previousPos;
@@ -28,6 +29,11 @@ public class LineDrawer
         {
             _lineRenderer.positionCount = 2;
             _lineRenderer.SetPosition(0, _previousPos);
+            Aabb = new Bounds
+            {
+                center = _previousPos,
+                extents = Vector3.zero
+            };
         }
         else
             _lineRenderer.positionCount++;
@@ -48,9 +54,10 @@ public class LineDrawer
         _lineRenderer.startWidth = _lineRenderer.endWidth = _lineParameters.LineWidth;
         if (Vector3.Distance(_previousPos, position) > _lineParameters.LineInterval)
         {
-            _lineRenderer.positionCount++;
+            int previousCount = _lineRenderer.positionCount++;
+            Aabb.Encapsulate(_lineRenderer.GetPosition(previousCount - 1));
             _previousPos = position;
         }
-        _lineRenderer.SetPosition(_lineRenderer.positionCount-1, position);
+        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, position);
     }
 }

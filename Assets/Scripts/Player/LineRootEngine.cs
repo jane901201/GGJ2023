@@ -43,7 +43,7 @@ public class LineRootEngine : MonoBehaviour
         {
             _UpdateDirection();
             Vector3 rootPos = _lineRootTransform.position;
-            _lineRootTransform.position = rootPos + _currentDirection * _speed * Time.deltaTime;
+            _lineRootTransform.position = rootPos + _currentDirection * (_speed * Time.deltaTime);
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }

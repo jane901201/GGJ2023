@@ -15,6 +15,8 @@ public class GameplayView : MonoBehaviour
     private LineRendererManager _lineRendererManager;
     [SerializeField]
     private Transform _lineRoot;
+    [SerializeField]
+    private LineColliderGenerator _colliderGenerator;
 
     private LineDrawerManager _drawerManager;
     private CancellationTokenSource _cancellationTokenSource;
@@ -22,6 +24,7 @@ public class GameplayView : MonoBehaviour
     public void Initialize()
     {
         _drawerManager = new LineDrawerManager(_parameters);
+        _colliderGenerator.Initialize(_drawerManager);
     }
 
     public void StartGameplaySession(Vector3 startPosition, Vector3 startDirection)
