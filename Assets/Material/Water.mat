@@ -73,6 +73,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: b24314ab17e69a44c964f4e324af9085, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2D_Array:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Alpha: 3.52
@@ -99,4 +103,5 @@ Material:
     - _BubbleColor: {r: 3.732132, g: 3.732132, b: 3.732132, a: 1}
     - _Color: {r: 0.50436395, g: 2.0847044, b: 2.6899412, a: 0.78431374}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RandomSeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
