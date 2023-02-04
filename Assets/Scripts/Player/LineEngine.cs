@@ -18,20 +18,17 @@ public class LineEngine : MonoBehaviour
     [SerializeField]
     private Transform _lineRootTransform;
     private CancellationTokenSource _tokenSrc;
-    [SerializeField]
-    private CollisionSender _collisionSender;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Fire()
     {
         _tokenSrc = new CancellationTokenSource();
         _currentDirection = new Vector3(0, -1, 0);
         _UpdateLineRoot().Forget();
-        _collisionSender.OnCollideToDeath += () =>
-        {
-            _tokenSrc.Cancel();
-            Debug.Log("Death!!");
-        };
+    }
+
+    public void Stop()
+    {
+        _tokenSrc.Cancel();
     }
 
     private async UniTaskVoid _UpdateLineRoot()
