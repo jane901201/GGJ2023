@@ -24,12 +24,17 @@ public class LineDrawer
     {
         _lineRoot = lineRoot;
         _previousPos = _GetLinePos(_lineRoot.position);
-        int positionCount = ++_lineRenderer.positionCount;
-        _lineRenderer.SetPosition(positionCount - 1, _previousPos);
+        if (_lineRenderer.positionCount == 0)
+        {
+            _lineRenderer.positionCount = 2;
+            _lineRenderer.SetPosition(0, _previousPos);
+        }
+        else
+            _lineRenderer.positionCount++;
         while (!token.IsCancellationRequested)
         {
             _Update();
-            await UniTask.Yield(PlayerLoopTiming.Update);
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }
 

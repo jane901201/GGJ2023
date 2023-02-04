@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 
 using UnityEngine;
@@ -23,14 +24,19 @@ public class GameplayView : MonoBehaviour
         _drawerManager = new LineDrawerManager(_parameters);
     }
 
-    public void StartGameplaySession(Vector3 startPosition)
+    public void StartGameplaySession(Vector3 startPosition, Vector3 startDirection)
     {
+        if (_cancellationTokenSource != null)
+        {
+            Debug.LogError("Should stop gameplay session first.");
+            return;
+        }
         _cancellationTokenSource = new CancellationTokenSource();
         LineRenderer lineRenderer = _lineRendererManager.GetLineRenderer();
         LineDrawer drawer = _drawerManager.GetLineDrawer(lineRenderer);
         _lineRoot.position = startPosition;
         drawer.Draw(_cancellationTokenSource.Token, _lineRoot).Forget();
-        _lineRootEngine.Fire();
+        _lineRootEngine.Fire(startPosition, startDirection);
     }
 
     public void StopGameplaySession()
@@ -39,5 +45,10 @@ public class GameplayView : MonoBehaviour
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = null;
+    }
+
+    private void OnDestroy()
+    {
+        StopGameplaySession();
     }
 }

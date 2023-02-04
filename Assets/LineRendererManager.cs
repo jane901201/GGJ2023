@@ -14,7 +14,7 @@ public class LineRendererManager : MonoBehaviour
     private void Awake()
     {
         _template.enabled = false;
-        _template.positionCount = 1;
+        _template.positionCount = 0;
         _template.useWorldSpace = false;
         _pool.Add(_template);
     }
@@ -30,7 +30,7 @@ public class LineRendererManager : MonoBehaviour
         var newGo = new GameObject();
         newGo.transform.SetParent(transform);
         var lineRenderer = newGo.AddComponent<LineRenderer>();
-        lineRenderer.positionCount = 1;
+        lineRenderer.positionCount = 0;
         lineRenderer.useWorldSpace = false;
         _pool.Add(lineRenderer);
         return lineRenderer;

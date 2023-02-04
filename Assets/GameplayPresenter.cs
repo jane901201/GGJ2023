@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameplayPresenter : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class GameplayPresenter : MonoBehaviour
     private CollisionSender _collisionSender;
     [SerializeField]
     private GameplayView _view;
+
+    private int _x = 0;
     
     public void Start()
     {
@@ -15,6 +18,15 @@ public class GameplayPresenter : MonoBehaviour
             _view.StopGameplaySession();
         };
         _view.Initialize();
-        _view.StartGameplaySession(new Vector3(0, 0, 0));
+        _view.StartGameplaySession(new Vector3(_x++, 0, 0), new Vector3(0, -1, 0));
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            _view.StopGameplaySession();
+            _view.StartGameplaySession(new Vector3(_x++, 0, 0), new Vector3(0, -1, 0));
+        }
     }
 }
