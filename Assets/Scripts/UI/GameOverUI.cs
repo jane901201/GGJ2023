@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Text currentScoreText;
+    [SerializeField] private Text historyScoreText;
+
+    public void SetCurrentScore(int score)
     {
-        
+        currentScoreText.text = score.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetHistoryScore(int historyScore)
     {
-        
+        historyScoreText.text = historyScore.ToString();
     }
 }
