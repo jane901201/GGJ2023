@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] MainGameUI mainGameUI;
+    [SerializeField] Transform playerTransform;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        mainGameUI.SetRootText((int) Mathf.Abs(playerTransform.position.y));
     }
 }
