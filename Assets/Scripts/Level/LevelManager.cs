@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
                             continue;
                         }
 
-                        var sceneObject = _sceneObjectSetting.RandomPick(grid.y, maxSize);
+                        var sceneObject = _sceneObjectSetting.RandomPick(yMin, maxSize);
 
                         if (sceneObject != null)
                         {
@@ -80,6 +80,7 @@ public class LevelManager : MonoBehaviour
 
                             var obj = GameObject.Instantiate(sceneObject.Prefab);
                             obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, -(yMin + sceneObject.Size.y/2f)) * _unitLength;
+                            obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
 
                             leftMinBound = leftMinBound - 1;
                             rightMaxBound = rightMaxBound + sceneObject.Size.x;
@@ -99,11 +100,12 @@ public class LevelManager : MonoBehaviour
                         var maxSize1 = new Vector2Int(leftMinBound-xMin+1, yMax-yMin+1);
                         if (maxSize1.x >= _generateThreshold && maxSize1.y >= _generateThreshold)
                         {
-                            var sceneObject1 = _sceneObjectSetting.RandomPick(grid.y, maxSize1);
+                            var sceneObject1 = _sceneObjectSetting.RandomPick(yMin, maxSize1);
                             if (sceneObject1 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject1.Prefab);
                                 obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, -(yMin + sceneObject1.Size.y/2f)) * _unitLength;
+                                obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
 
                                 leftMinBound = leftMinBound - sceneObject1.Size.x;
 
@@ -121,12 +123,13 @@ public class LevelManager : MonoBehaviour
                         var maxSize2 = new Vector2Int(xMax-rightMaxBound+1, yMax-yMin+1);
                         if (maxSize2.x >= _generateThreshold && maxSize2.y >= _generateThreshold)
                         {
-                            var sceneObject2 = _sceneObjectSetting.RandomPick(grid.y, maxSize2);
+                            var sceneObject2 = _sceneObjectSetting.RandomPick(yMin, maxSize2);
                             Debug.Log(sceneObject2?.Prefab);
                             if (sceneObject2 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject2.Prefab);
                                 obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, -(yMin + sceneObject2.Size.y/2f)) * _unitLength;
+                                obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
 
                                 rightMaxBound = rightMaxBound + sceneObject2.Size.x;
 
