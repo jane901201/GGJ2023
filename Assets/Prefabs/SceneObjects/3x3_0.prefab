@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1874498892}
   - component: {fileID: 1874498893}
+  - component: {fileID: 2599955823222610553}
   m_Layer: 0
   m_Name: rock03 (3)
   m_TagString: Untagged
@@ -252,6 +253,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2599955823222610553
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874498891}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.52, y: 1.26}
+    newSize: {x: 3.52, y: 1.26}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.52, y: 1.26}
+  m_EdgeRadius: 0
 --- !u!1 &1902000541
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1902000542}
   - component: {fileID: 1902000543}
+  - component: {fileID: 7209802724074957488}
   m_Layer: 0
   m_Name: rock03 (4)
   m_TagString: Untagged
@@ -336,6 +364,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &7209802724074957488
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902000541}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.52, y: 1.26}
+    newSize: {x: 3.52, y: 1.26}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.52, y: 1.26}
+  m_EdgeRadius: 0
 --- !u!1 &2053788793
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2097719742}
   - component: {fileID: 2097719743}
+  - component: {fileID: 6775150660835448202}
   m_Layer: 0
   m_Name: rock03 (5)
   m_TagString: Untagged
@@ -517,6 +572,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &6775150660835448202
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097719741}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.52, y: 1.26}
+    newSize: {x: 3.52, y: 1.26}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.52, y: 1.26}
+  m_EdgeRadius: 0
 --- !u!1 &483584334095371402
 GameObject:
   m_ObjectHideFlags: 0
