@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 
 using Cysharp.Threading.Tasks;
@@ -17,15 +16,22 @@ public class LineEngine : MonoBehaviour
     private Vector3 _currentDirection;
 
     [SerializeField]
-    private GameObject _lineRoot;
+    private Transform _lineRootTransform;
     private CancellationTokenSource _tokenSrc;
-    
+    [SerializeField]
+    private CollisionSender _collisionSender;
+
     // Start is called before the first frame update
     void Start()
     {
         _tokenSrc = new CancellationTokenSource();
         _currentDirection = new Vector3(0, -1, 0);
         _UpdateLineRoot().Forget();
+        _collisionSender.OnCollideToDeath += () =>
+        {
+            _tokenSrc.Cancel();
+            Debug.Log("Death!!");
+        };
     }
 
     private async UniTaskVoid _UpdateLineRoot()
@@ -34,9 +40,8 @@ public class LineEngine : MonoBehaviour
         while (!token.IsCancellationRequested)
         {
             _UpdateDirection();
-            Transform rootTrans = _lineRoot.transform;
-            Vector3 rootPos = rootTrans.position;
-            rootTrans.position = rootPos + _currentDirection * _speed;
+            Vector3 rootPos = _lineRootTransform.position;
+            _lineRootTransform.position = rootPos + _currentDirection * _speed;
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }
@@ -52,7 +57,8 @@ public class LineEngine : MonoBehaviour
 
     private void OnDestroy()
     {
-        _tokenSrc.Cancel();
+        if(!_tokenSrc.IsCancellationRequested)
+            _tokenSrc.Cancel();
         _tokenSrc.Dispose();
     }
 }
