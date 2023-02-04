@@ -113,7 +113,7 @@ public class LineColliderGenerator : MonoBehaviour
         BoxCollider2D coll = _colliderPool[index];
         coll.enabled = true;
         Vector3 center = Vector3.Lerp(from, to, 0.5f);
-        coll.size = new Vector2(Vector3.Distance(from, to), _lineParameters.LineWidth);
+        coll.size = new Vector2(Vector3.Distance(from, to), _lineParameters.LineColliderWidth);
         coll.transform.position = center;
         float angle = Vector3.Angle(to - from, Vector3.right);
         coll.transform.eulerAngles = new Vector3(0, 0, angle);
