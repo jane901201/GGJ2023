@@ -43,6 +43,7 @@ public class SceneObjectSetting : ScriptableObject
     {
         public Vector2Int Size = new Vector2Int(1, 1);
         public int Weight = 1;
+        public bool IsRotable = true;
         public GameObject Prefab;
     }
 

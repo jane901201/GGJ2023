@@ -80,7 +80,10 @@ public class LevelManager : MonoBehaviour
 
                             var obj = GameObject.Instantiate(sceneObject.Prefab);
                             obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, -(yMin + sceneObject.Size.y/2f)) * _unitLength;
-                            obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                            if (sceneObject.IsRotable)
+                            {
+                                obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                            }
 
                             leftMinBound = leftMinBound - 1;
                             rightMaxBound = rightMaxBound + sceneObject.Size.x;
@@ -105,7 +108,10 @@ public class LevelManager : MonoBehaviour
                             {
                                 var obj = GameObject.Instantiate(sceneObject1.Prefab);
                                 obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, -(yMin + sceneObject1.Size.y/2f)) * _unitLength;
-                                obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                                if (sceneObject1.IsRotable)
+                                {
+                                    obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                                }
 
                                 leftMinBound = leftMinBound - sceneObject1.Size.x;
 
@@ -129,7 +135,10 @@ public class LevelManager : MonoBehaviour
                             {
                                 var obj = GameObject.Instantiate(sceneObject2.Prefab);
                                 obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, -(yMin + sceneObject2.Size.y/2f)) * _unitLength;
-                                obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                                if (sceneObject2.IsRotable)
+                                {
+                                    obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
+                                }
 
                                 rightMaxBound = rightMaxBound + sceneObject2.Size.x;
 
