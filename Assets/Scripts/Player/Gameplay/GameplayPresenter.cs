@@ -51,6 +51,7 @@ public class GameplayPresenter : MonoBehaviour
         // From whole
         _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
+        _rebornHelper._setCountdownView += _view.SetCountdown;
 
         _life = _maxLife;
         _hardness = _initHardness;
