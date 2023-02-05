@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -39,6 +40,8 @@ public class GameplayPresenter : MonoBehaviour
 
     [SerializeField] private int _initHardness = 0;
     [SerializeField] private int _hardness;
+
+    [SerializeField] private float waitAnimationSeconds = 4f;
 
     [SerializeField]
     private float _resetTime = 2f;
@@ -131,6 +134,12 @@ public class GameplayPresenter : MonoBehaviour
     public void Start()
     {
         _collisionSender.OnCollideToSomething += _OnCollideToSomething;
+        StartCoroutine(WaitForAnimationComplete());
+    }
+
+    private IEnumerator WaitForAnimationComplete()
+    {
+        yield return new WaitForSeconds(waitAnimationSeconds);
         _StartGameplaySession(new Vector3(0, 0, 0), new Vector3(0, -1, 0));
         _gameplayState = GameplayState.PlayerSession;
     }
