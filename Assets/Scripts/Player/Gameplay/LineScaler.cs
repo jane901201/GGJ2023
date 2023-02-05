@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [ExecuteAlways]
 public class LineScaler : MonoBehaviour

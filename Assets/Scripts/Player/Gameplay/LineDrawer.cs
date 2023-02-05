@@ -10,6 +10,7 @@ public class LineDrawer
 {
     private readonly LineParameters _lineParameters;
     private readonly LineRenderer _lineRenderer;
+    public Bounds Aabb;
     
     private Transform _lineRoot;
     private Vector3 _previousPos;
@@ -24,12 +25,22 @@ public class LineDrawer
     {
         _lineRoot = lineRoot;
         _previousPos = _GetLinePos(_lineRoot.position);
-        int positionCount = ++_lineRenderer.positionCount;
-        _lineRenderer.SetPosition(positionCount - 1, _previousPos);
+        if (_lineRenderer.positionCount == 0)
+        {
+            _lineRenderer.positionCount = 2;
+            _lineRenderer.SetPosition(0, _previousPos);
+            Aabb = new Bounds
+            {
+                center = _previousPos,
+                extents = Vector3.zero
+            };
+        }
+        else
+            _lineRenderer.positionCount++;
         while (!token.IsCancellationRequested)
         {
             _Update();
-            await UniTask.Yield(PlayerLoopTiming.Update);
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }
 
@@ -43,9 +54,10 @@ public class LineDrawer
         _lineRenderer.startWidth = _lineRenderer.endWidth = _lineParameters.LineWidth;
         if (Vector3.Distance(_previousPos, position) > _lineParameters.LineInterval)
         {
-            _lineRenderer.positionCount++;
+            int previousCount = _lineRenderer.positionCount++;
+            Aabb.Encapsulate(_lineRenderer.GetPosition(previousCount - 1));
             _previousPos = position;
         }
-        _lineRenderer.SetPosition(_lineRenderer.positionCount-1, position);
+        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, position);
     }
 }

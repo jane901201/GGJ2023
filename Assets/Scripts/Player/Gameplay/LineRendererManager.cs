@@ -8,18 +8,18 @@ public class LineRendererManager : MonoBehaviour
     private LineRenderer _template;
     
     private readonly List<LineRenderer> _pool = new List<LineRenderer>();
-    
+
     private bool _taken;
     
     private void Awake()
     {
         _template.enabled = false;
-        _template.positionCount = 1;
+        _template.positionCount = 0;
         _template.useWorldSpace = false;
         _pool.Add(_template);
     }
 
-    public LineRenderer GetLineRenderer()
+    public LineRenderer GetNewRenderer()
     {
         if (!_taken)
         {
@@ -30,9 +30,12 @@ public class LineRendererManager : MonoBehaviour
         var newGo = new GameObject();
         newGo.transform.SetParent(transform);
         var lineRenderer = newGo.AddComponent<LineRenderer>();
-        lineRenderer.positionCount = 1;
+        lineRenderer.positionCount = 0;
         lineRenderer.useWorldSpace = false;
         _pool.Add(lineRenderer);
         return lineRenderer;
     }
+    
+    public LineRenderer GetLatestRenderer()
+        => _pool[^1];
 }
