@@ -20,7 +20,10 @@ public abstract class BaseSceneObject : MonoBehaviour
     public void PlayAnimator()
     {
         var animator = this.GetComponent<Animator>();
-        animator.SetTrigger(PLAY_KEY);
+        if (animator != null)
+        {
+            animator.SetTrigger(PLAY_KEY);
+        }
     }
 
     public void PlayAudio(AudioSource audioSource)

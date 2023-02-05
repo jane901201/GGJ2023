@@ -6,13 +6,16 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Text currentScoreText;
     [SerializeField] private Text historyScoreText;
 
+    private const string CURRENT_SCORE_TEXT = "åˆ†æ•¸ï¼š";
+    private const string HISTORY_HIGHEST_SCORE_TEXT = "æ­·å²æœ€é«˜åˆ†æ•¸ï¼š";
+
     public void SetCurrentScore(int score)
     {
-        currentScoreText.text = "¤À¼Æ¡G" + score.ToString();
+        currentScoreText.text = CURRENT_SCORE_TEXT + score.ToString();
     }
 
     public void SetHistoryScore(int historyScore)
     {
-        historyScoreText.text = "¾ú¥v³Ì°ª¤À¼Æ¡G" + historyScore.ToString();
+        historyScoreText.text = HISTORY_HIGHEST_SCORE_TEXT + historyScore.ToString();
     }
 }
