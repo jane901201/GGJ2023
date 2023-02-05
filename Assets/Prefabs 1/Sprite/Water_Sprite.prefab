@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a99830a05e664b2cbd5531391bd25b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 50
+  _audio: {fileID: 8300000, guid: 0d99f1ce20e465447a24cf6ccbac2d19, type: 3}
+  Life: 100
   Score: 0
   Hardness: 0
   SpeedChangeRatio: 0
