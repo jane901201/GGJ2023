@@ -2,26 +2,6 @@ using System;
 
 using UnityEngine;
 
-public interface IRebornMechanism
-{
-    (Vector3 newDir, LineNode lineNode) GetDest();
-}
-
-public readonly struct LineNode
-{
-    public readonly LineRenderer LineRenderer;
-    public readonly int Index;
-
-    public LineNode(LineRenderer lineRenderer, int index) 
-    { 
-        LineRenderer = lineRenderer;
-        Index = index;
-    }
-
-    public Vector3 Position
-        => LineRenderer.GetPosition(Index);
-}
-
 public class RebornHelper : MonoBehaviour
 {
     public event Action<(Vector3 newDir, LineNode lineNode)> OnRebornDestinationMade;
