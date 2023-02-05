@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3554676133724045213}
   - component: {fileID: 3554676133724045210}
+  - component: {fileID: -2516799159981947490}
   m_Layer: 0
   m_Name: Pollution_Sprite
   m_TagString: Untagged
@@ -84,3 +85,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2516799159981947490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3554676133724045211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a99830a05e664b2cbd5531391bd25b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Life: 0
+  Score: 0
+  Hardness: 0
+  SpeedChangeRatio: 0
+  SpeedChangeDuration: 0
+  LifeDownChangeRatio: 50
+  LifeDownChangeDuration: 5
