@@ -16,16 +16,10 @@ public class LevelManager : MonoBehaviour
     [Header("Player Object")]
     [SerializeField] private GameObject _obj;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize(SceneObjectSetting sceneObjectSetting)
     {
+        _sceneObjectSetting = sceneObjectSetting;
         StartCoroutine(_AutoGenerate());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private IEnumerator _AutoGenerate()
