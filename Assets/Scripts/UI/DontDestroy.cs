@@ -41,6 +41,8 @@ public class DontDestroy : MonoBehaviour
 
     public IEnumerator _Inject(SceneObjectSetting sceneObjectSetting)
     {
+        yield return new WaitForSeconds(3f);
+
         while (true)
         {
             var levelManager = FindObjectOfType<LevelManager>();
