@@ -28,6 +28,9 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
+    [SerializeField] private Animator _bloodAnimator;
+    [SerializeField] private float _bloodThreshold = 30;
+
     [SerializeField] private float _maxLife = 1000;
     [SerializeField] private float _life;
     [SerializeField] private float downLifeSpeed = 50f;
@@ -156,6 +159,16 @@ public class GameplayPresenter : MonoBehaviour
         _life = _life - _GetFinalDownLifeSpeed() * Time.deltaTime;
         var humidity = Mathf.Max(0, (int)((100f * _life) / _maxLife));
         _view.SetHumidity(humidity);
+
+        if (humidity <= _bloodThreshold)
+        {
+            _bloodAnimator.gameObject.SetActive(true);
+            _bloodAnimator.speed = 1f + (1f-(humidity/_bloodThreshold)) * 4f;
+        }
+        else
+        {
+            _bloodAnimator.gameObject.SetActive(false);
+        }
         
         if (humidity <= 0)
         {
@@ -171,6 +184,7 @@ public class GameplayPresenter : MonoBehaviour
         if (sceneObject != null)
         {
             sceneObject.PlayAudio(_audioSource);
+            sceneObject.PlayAnimator();
 
             if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Self && !_isResetting)
             {
