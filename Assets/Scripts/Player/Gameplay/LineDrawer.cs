@@ -32,7 +32,7 @@ public class LineDrawer
             Aabb = new Bounds
             {
                 center = _previousPos,
-                extents = Vector3.zero
+                size = new Vector3(0, 0, 0.1f)
             };
         }
         else
@@ -55,8 +55,9 @@ public class LineDrawer
         if (Vector3.Distance(_previousPos, position) > _lineParameters.LineInterval)
         {
             int previousCount = _lineRenderer.positionCount++;
-            Aabb.Encapsulate(_lineRenderer.GetPosition(previousCount - 1));
-            _previousPos = position;
+            Vector3 previousPos = _lineRenderer.GetPosition(previousCount - 1); 
+            Aabb.Encapsulate(previousPos);
+            _previousPos = previousPos;
         }
         _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, position);
     }

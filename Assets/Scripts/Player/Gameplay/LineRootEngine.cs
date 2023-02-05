@@ -12,13 +12,11 @@ public class LineRootEngine : MonoBehaviour
     [SerializeField]
     [Min(0)]
     private float _angularSpeed = 90.0f;
-
-    private Vector3 _currentDirection;
-
     [SerializeField]
     private Transform _lineRootTransform;
-    private CancellationTokenSource _tokenSrc;
 
+    private Vector3 _currentDirection;
+    private CancellationTokenSource _tokenSrc;
     private GameplayPresenter _gameplayPresenter;
 
     public void Fire(Vector3 position, Vector3 direction, GameplayPresenter gameplayPresenter)

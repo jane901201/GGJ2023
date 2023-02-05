@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 public class LineColliderGenerator : MonoBehaviour
 {
-
     [SerializeField]
     private LineParameters _lineParameters;
     [SerializeField]
@@ -54,15 +53,17 @@ public class LineColliderGenerator : MonoBehaviour
     private static void _DrawBoundsGizmos(Bounds aabb)
     {
         Vector3 extents = aabb.extents;
-        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, 0), aabb.center + new Vector3(extents.x, extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, extents.y, 0), aabb.center + new Vector3(extents.x, -extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0)); 
+        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, -8), aabb.center + new Vector3(-extents.x, -extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, -8), aabb.center + new Vector3(extents.x, extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, extents.y, -8), aabb.center + new Vector3(extents.x, -extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, -8), aabb.center + new Vector3(-extents.x, -extents.y, -8)); 
     }
 
     private static void _DrawNodeGizmos(LineSegment node)
     {
-        Gizmos.DrawLine(node.Pos, node.To.Value);
+        Vector3 pos = node.Pos;
+        Vector3 to = node.To.Value;
+        Gizmos.DrawLine(new Vector3(pos.x, pos.y, -8), new Vector3(to.x, to.y, -8));
     }
 
     // Update is called once per frame
@@ -80,7 +81,9 @@ public class LineColliderGenerator : MonoBehaviour
         var index = 0;
         foreach (LineSegment node in _validNodes)
         {
-            _BindCollider(node.Pos, node.To.Value, index++);
+            Vector3 pos = node.Pos;
+            Vector3 to = node.To.Value;
+            _BindCollider(new Vector3(pos.x, pos.y, 0), new Vector3(to.x, to.y, 0), index++);
         }
 
         for (; index < _colliderPool.Count; index++)
@@ -139,7 +142,7 @@ public class LineColliderGenerator : MonoBehaviour
     }
 
     private static Bounds _GetAabb(Vector3 pos, float size)
-        => new Bounds(pos, new Vector3(size, size, size));
+        => new Bounds(pos, new Vector3(size, size, 0.1f));
 
     private Vector3 _GetLineNodePos(LineRenderer lineRenderer, int index)
     {
