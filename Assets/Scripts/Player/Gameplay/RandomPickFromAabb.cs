@@ -28,10 +28,11 @@ public sealed class RandomPickFromAabb : MonoBehaviour, IRebornMechanism
             return;
         
         Bounds bounds = _lineDrawerManager.GetWholeBounds();
+        Vector3 size = bounds.size;
         var shrankBounds = new Bounds
         (
             bounds.center,
-            bounds.size * _range
+            new Vector3(size.x * _range, size.y * _range, size.z)
         );
         
         Gizmos.color = Color.magenta;
@@ -43,32 +44,33 @@ public sealed class RandomPickFromAabb : MonoBehaviour, IRebornMechanism
     private static void _DrawBoundsGizmos(Bounds aabb)
     {
         Vector3 extents = aabb.extents;
-        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, 0), aabb.center + new Vector3(extents.x, extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, extents.y, 0), aabb.center + new Vector3(extents.x, -extents.y, 0));
-        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0));
+        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, -8), aabb.center + new Vector3(-extents.x, -extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(-extents.x, extents.y, -8), aabb.center + new Vector3(extents.x, extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, extents.y, -8), aabb.center + new Vector3(extents.x, -extents.y, -8));
+        Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, -8), aabb.center + new Vector3(-extents.x, -extents.y, -8));
     }
 
     (Vector3 newDir, LineNode lineNode) IRebornMechanism.GetDest()
     {
-        var currentRange = _range;
+        float currentRange = _range;
         var segments = new List<(LineRenderer, int)>();
         {
             Bounds bounds = _lineDrawerManager.GetWholeBounds();
+            Vector3 size = bounds.size;
             var shrankBounds = new Bounds
             (
                 bounds.center,
-                bounds.size * currentRange
+                new Vector3(size.x * currentRange, size.y * currentRange, size.z)
             );
             List<LineRenderer> renderers = _lineDrawerManager.GetLineRenderers(shrankBounds);
-            Vector3 linePosb = _GetLineRootPos();
+            Vector3 linePosA = _GetLineRootPos();
             foreach (LineRenderer lineRenderer in renderers)
             {
                 int count = lineRenderer.positionCount;
                 for (var index = 1; index < count; index++)
                 {
                     Vector3 position = lineRenderer.GetPosition(index);
-                    if (shrankBounds.Contains(position) && Vector3.Distance(linePosb, position) > _lineParameters.CircleRadius)
+                    if (shrankBounds.Contains(position) && Vector3.Distance(linePosA, position) > _lineParameters.CircleRadius)
                         segments.Add((lineRenderer, index));
                 }
             }
@@ -77,20 +79,21 @@ public sealed class RandomPickFromAabb : MonoBehaviour, IRebornMechanism
         {
             currentRange = (currentRange + 1.0f) / 2;
             Bounds bounds = _lineDrawerManager.GetWholeBounds();
+            Vector3 size = bounds.size;
             var shrankBounds = new Bounds
             (
                 bounds.center,
-                bounds.size * currentRange
+                new Vector3(size.x * currentRange, size.y * currentRange, size.z)
             );
             List<LineRenderer> renderers = _lineDrawerManager.GetLineRenderers(shrankBounds); 
-            Vector3 linePosa = _GetLineRootPos();
+            Vector3 linePosB = _GetLineRootPos();
             foreach (LineRenderer lineRenderer in renderers)
             {
                 int count = lineRenderer.positionCount;
                 for (var index = 1; index < count; index++)
                 {
                     Vector3 position = lineRenderer.GetPosition(index);
-                    if (shrankBounds.Contains(position) && Vector3.Distance(linePosa, position) > _lineParameters.CircleRadius)
+                    if (shrankBounds.Contains(position) && Vector3.Distance(linePosB, position) > _lineParameters.CircleRadius)
                         segments.Add((lineRenderer, index));
                 }
             }
