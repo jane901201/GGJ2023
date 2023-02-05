@@ -15,6 +15,17 @@ public abstract class BaseSceneObject : MonoBehaviour
 
     [SerializeField] private AudioClip _audio;
 
+    private const string PLAY_KEY = "Play";
+
+    public void PlayAnimator()
+    {
+        var animator = this.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger(PLAY_KEY);
+        }
+    }
+
     public void PlayAudio(AudioSource audioSource)
     {
         if (_audio != null)

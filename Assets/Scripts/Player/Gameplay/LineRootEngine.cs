@@ -14,6 +14,8 @@ public class LineRootEngine : MonoBehaviour
     private float _angularSpeed = 90.0f;
     [SerializeField]
     private Transform _lineRootTransform;
+    [SerializeField]
+    private Transform _headTransform;
 
     private Vector3 _currentDirection;
     private CancellationTokenSource _tokenSrc;
@@ -45,6 +47,8 @@ public class LineRootEngine : MonoBehaviour
             _UpdateDirection();
             Vector3 rootPos = _lineRootTransform.position;
             _lineRootTransform.position = rootPos + _currentDirection * (_gameplayPresenter.GetFinalSpeed(_speed) * Time.deltaTime);
+            _headTransform.rotation = Quaternion.FromToRotation(Vector3.right, _currentDirection);
+            
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }

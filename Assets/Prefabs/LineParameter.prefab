@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3419e1014e4b1494cbd6b195c38881dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineWidth: 0.6
+  LineWidth: 1.5
   LineInterval: 1
   CircleRadius: 0.84
-  LineColliderWidth: 0.5
+  LineColliderWidth: 0.2
   CircleColliderRadius: 0.84
