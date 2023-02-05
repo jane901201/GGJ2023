@@ -21,6 +21,10 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private RebornHelper _rebornHelper;
 
+    [SerializeField] private float _maxLife = 1000;
+    [SerializeField] private float _life;
+    [SerializeField] private float downLifeSpeed = 50f;
+
     private LineDrawerManager _drawerManager;
     private CancellationTokenSource _cancellationTokenSource;
     private GameplayState _gameplayState = GameplayState.Start;
@@ -31,6 +35,8 @@ public class GameplayPresenter : MonoBehaviour
         _colliderGenerator.Initialize(_drawerManager);
         _rebornHelper.Initialize(new RandomPickOnLatestLine(_lineRendererManager), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
+
+        _life = _maxLife;
     }
 
     private void _StartGameplaySession(Vector3 startPosition, Vector3 startDirection)
@@ -97,9 +103,23 @@ public class GameplayPresenter : MonoBehaviour
             _StartGameplaySession(node.Position, dir);
         _gameplayState = GameplayState.PlayerSession; 
     }
+    
+    private void _UpdateLife()
+    {
+        _life = _life - downLifeSpeed * Time.deltaTime;
+        var humidity = Mathf.Max(0, (int)((100f * _life) / _maxLife));
+        _view.SetHumidity(humidity);
+        
+        if (humidity <= 0)
+        {
+            _gameplayState = GameplayState.Death;
+            _StopGameplaySession();
+        }
+    }
 
     private void Update()
     {
+        _UpdateLife();
         _view.Render(_gameplayState);
     }
 }

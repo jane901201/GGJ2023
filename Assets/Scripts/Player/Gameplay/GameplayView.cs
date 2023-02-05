@@ -15,8 +15,15 @@ public class GameplayView : MonoBehaviour
 {
     [SerializeField]
     public GameObject _joystick;
+    [SerializeField]
+    private MainGameUI _mainGameUI;
 
     private GameplayState _state = GameplayState.None;
+
+    public void SetHumidity(int humidity)
+    {
+        _mainGameUI.SetHumidityText(humidity);
+    }
 
     public void Render(GameplayState state)
     {
