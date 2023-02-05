@@ -44,6 +44,9 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField] private float waitAnimationSeconds = 4f;
 
     [SerializeField]
+    private float _angularOffset;
+
+    [SerializeField]
     private float _resetTime = 2f;
     private bool _isResetting;
 
@@ -68,7 +71,7 @@ public class GameplayPresenter : MonoBehaviour
         //_fromAabb.Initialize(_drawerManager, _lineRoot, _parameters);
         //_rebornHelper.Initialize(_fromAabb, () => _gameplayState == GameplayState.Reborn);
         // From whole
-        _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters), () => _gameplayState == GameplayState.Reborn);
+        _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
         _rebornHelper._setCountdownView += _view.SetCountdown;
 
