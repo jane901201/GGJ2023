@@ -23,6 +23,8 @@ public class GameplayPresenter : MonoBehaviour
     private RebornHelper _rebornHelper;
     [SerializeField]
     private RandomPickFromAabb _fromAabb;
+    [SerializeField]
+    private AudioSource _audioSource;
 
     [SerializeField] private float _maxLife = 1000;
     [SerializeField] private float _life;
@@ -32,6 +34,8 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField] private int _hardness;
 
     private List<Effect> _effects = new List<Effect>();
+
+    [SerializeField] private int _maxDepth = 0;
 
     private int _effectScore = 0;
 
@@ -52,6 +56,7 @@ public class GameplayPresenter : MonoBehaviour
         _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
 
+        _maxDepth = 0;
         _life = _maxLife;
         _hardness = _initHardness;
     }
@@ -139,6 +144,8 @@ public class GameplayPresenter : MonoBehaviour
         var sceneObject = collider.GetComponent<BaseSceneObject>();
         if (sceneObject != null)
         {
+            sceneObject.PlayAudio(_audioSource);
+
             if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Self)
             {
                 Debug.Log("Collide!!");
@@ -169,6 +176,7 @@ public class GameplayPresenter : MonoBehaviour
     {
         _UpdateLife();
         _UpdateEffects();
+        _maxDepth = Mathf.Max(_maxDepth, _GetCurrentDepth());
         _view.Render(_gameplayState);
     }
 
@@ -209,6 +217,16 @@ public class GameplayPresenter : MonoBehaviour
             }
         }
         return finalSpeed;
+    }
+
+    private int _GetFinalScore()
+    {
+        return _maxDepth * 10 + _effectScore;
+    }
+
+    private int _GetCurrentDepth()
+    {
+        return (int)Mathf.Abs(_lineRoot.position.y);
     }
 
     #region Effect
