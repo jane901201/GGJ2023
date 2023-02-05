@@ -9551,7 +9551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f96b5897324443f9c901036be4de23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audio: {fileID: 0}
+  _audio: {fileID: 8300000, guid: 71119d33ee526284b9ffcaa6dc1848ff, type: 3}
   Hardness: 2
 --- !u!95 &3816284070917213942
 Animator:
