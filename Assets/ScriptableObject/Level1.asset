@@ -18,7 +18,7 @@ MonoBehaviour:
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 1
-      Prefab: {fileID: 483584334095371402, guid: 7438184ea0bfe4f7aa302165ed7a885a, type: 3}
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
   - MinDepth: 0
     MaxDepth: 100
     Objects:
@@ -36,4 +36,4 @@ MonoBehaviour:
       Prefab: {fileID: 483584334095371402, guid: efc97cb0d7538a245a0db32295465254, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 16
-      Prefab: {fileID: 483584334095371402, guid: 7438184ea0bfe4f7aa302165ed7a885a, type: 3}
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
