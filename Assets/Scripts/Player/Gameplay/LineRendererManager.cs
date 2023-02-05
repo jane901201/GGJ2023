@@ -10,6 +10,9 @@ public class LineRendererManager : MonoBehaviour
     private readonly List<LineRenderer> _pool = new List<LineRenderer>();
 
     private bool _taken;
+
+    public List<LineRenderer> Renderers
+        => _pool;
     
     private void Awake()
     {
@@ -27,9 +30,7 @@ public class LineRendererManager : MonoBehaviour
             _template.enabled = true;
             return _template;
         }
-        var newGo = new GameObject();
-        newGo.transform.SetParent(transform);
-        var lineRenderer = newGo.AddComponent<LineRenderer>();
+        LineRenderer lineRenderer = Instantiate(_template);
         lineRenderer.positionCount = 0;
         lineRenderer.useWorldSpace = false;
         _pool.Add(lineRenderer);

@@ -5,17 +5,6 @@ using UnityEngine.Assertions;
 
 public class LineColliderGenerator : MonoBehaviour
 {
-    private readonly struct Node
-    {
-        public readonly Vector3 Pos;
-        public readonly Vector3 To;
-
-        public Node(Vector3 pos, Vector3 to)
-        {
-            Pos = pos;
-            To = to;
-        }
-    }
 
     [SerializeField]
     private LineParameters _lineParameters;
@@ -26,7 +15,7 @@ public class LineColliderGenerator : MonoBehaviour
     private float _outerAabbSize;
 
     private readonly List<BoxCollider2D> _colliderPool = new List<BoxCollider2D>();
-    private readonly List<Node> _validNodes = new List<Node>();
+    private readonly List<LineSegment> _validNodes = new List<LineSegment>();
 
     private LineDrawerManager _lineDrawerManager;
     
@@ -44,7 +33,7 @@ public class LineColliderGenerator : MonoBehaviour
         Gizmos.color = Color.yellow;
         _DrawBoundsGizmos(outerAabb);
         Gizmos.color = Color.cyan;
-        foreach (Node node in _validNodes)
+        foreach (LineSegment node in _validNodes)
         {
             _DrawNodeGizmos(node);
         }
@@ -71,9 +60,9 @@ public class LineColliderGenerator : MonoBehaviour
         Gizmos.DrawLine(aabb.center + new Vector3(extents.x, -extents.y, 0), aabb.center + new Vector3(-extents.x, -extents.y, 0)); 
     }
 
-    private static void _DrawNodeGizmos(Node node)
+    private static void _DrawNodeGizmos(LineSegment node)
     {
-        Gizmos.DrawLine(node.Pos, node.To);
+        Gizmos.DrawLine(node.Pos, node.To.Value);
     }
 
     // Update is called once per frame
@@ -89,9 +78,9 @@ public class LineColliderGenerator : MonoBehaviour
     private void _BindColliders()
     {
         var index = 0;
-        foreach (Node node in _validNodes)
+        foreach (LineSegment node in _validNodes)
         {
-            _BindCollider(node.Pos, node.To, index++);
+            _BindCollider(node.Pos, node.To.Value, index++);
         }
 
         for (; index < _colliderPool.Count; index++)
@@ -140,7 +129,7 @@ public class LineColliderGenerator : MonoBehaviour
                 continue;
             _validNodes.Add
             (
-                new Node
+                new LineSegment
                 (
                     nodePos,
                     nextPos
