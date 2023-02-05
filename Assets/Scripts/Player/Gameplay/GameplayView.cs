@@ -24,6 +24,11 @@ public class GameplayView : MonoBehaviour
         _gameOverUI.SetHistoryScore(historyScore);
     }
 
+    public void SetCountdown(float seconds)
+    {
+        _mainGameUI.SetCountDownText(seconds);
+    }
+
     public void Render(GameplayState state)
     {
         if(state == _state)

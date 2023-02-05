@@ -31,6 +31,8 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField] private Animator _bloodAnimator;
     [SerializeField] private float _bloodThreshold = 30;
 
+    [SerializeField] private SpriteRenderer _blackMask;
+
     [SerializeField] private float _maxLife = 1000;
     [SerializeField] private float _life;
     [SerializeField] private float downLifeSpeed = 50f;
@@ -65,6 +67,7 @@ public class GameplayPresenter : MonoBehaviour
         // From whole
         _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
+        _rebornHelper._setCountdownView += _view.SetCountdown;
 
         _maxDepth = 0;
         _life = _maxLife;
@@ -217,6 +220,9 @@ public class GameplayPresenter : MonoBehaviour
         _UpdateLife();
         _UpdateEffects();
         _maxDepth = Mathf.Max(_maxDepth, _GetCurrentDepth());
+
+        _blackMask.color = new Color(1f, 1f, 1f, _GetCurrentDepth() <= 50 ? 0f : Mathf.Min(1f, (_GetCurrentDepth() - 50f) / 50f));
+
         _view.Render(_gameplayState);
     }
 

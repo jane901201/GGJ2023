@@ -8,6 +8,7 @@ public class MainGameUI : MonoBehaviour
     [SerializeField] private Text humidityText;
     [SerializeField] private Text rootText;
     [SerializeField] private Text resistText;
+    [SerializeField] private Text countDownText;
 
     public void SetHumidityText(int humidity)
     {
@@ -22,6 +23,14 @@ public class MainGameUI : MonoBehaviour
     public void SetResistText(int resist)
     {
         resistText.text = resistText.ToString();
+    }
+
+    public void SetCountDownText(float seconds)
+    {
+        if (seconds == 0)
+            countDownText.text = "";
+        else
+            countDownText.text = seconds.ToString();
     }
 
 }
