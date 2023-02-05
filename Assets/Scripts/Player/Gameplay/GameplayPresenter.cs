@@ -231,6 +231,7 @@ public class GameplayPresenter : MonoBehaviour
     {
         _UpdateLife();
         _UpdateEffects();
+        _view.SetResistText(_hardness);
         _maxDepth = Mathf.Max(_maxDepth, _GetCurrentDepth());
 
         _blackMask.color = new Color(1f, 1f, 1f, _GetCurrentDepth() <= 50 ? 0f : Mathf.Min(1f, (_GetCurrentDepth() - 50f) / 50f));
