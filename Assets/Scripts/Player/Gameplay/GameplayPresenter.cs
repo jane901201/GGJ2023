@@ -106,6 +106,11 @@ public class GameplayPresenter : MonoBehaviour
     
     private void _UpdateLife()
     {
+        if (_gameplayState != GameplayState.PlayerSession)
+        {
+            return;
+        }
+
         _life = _life - downLifeSpeed * Time.deltaTime;
         var humidity = Mathf.Max(0, (int)((100f * _life) / _maxLife));
         _view.SetHumidity(humidity);
