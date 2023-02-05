@@ -189,7 +189,13 @@ public class GameplayPresenter : MonoBehaviour
         {
             _gameplayState = GameplayState.Death;
             _StopGameplaySession();
-            _view.SetScore(0 , 0);
+
+            int historyScore = PlayerPrefs.GetInt("HISTORY", 0);
+            int currentScore = _GetFinalScore();
+            historyScore = Mathf.Max(currentScore, historyScore);
+            PlayerPrefs.SetInt("HISTORY", historyScore);
+
+            _view.SetScore(currentScore, historyScore);
         }
     }
 
