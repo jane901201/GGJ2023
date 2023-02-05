@@ -9,6 +9,12 @@ public class SceneController : MonoBehaviour
 
     public void GoLevelScene()
     {
+        var levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager != null)
+        {
+            Destroy(levelManager);
+        }
+
         DontDestroy.dontDestroy.Inject();
         SceneManager.LoadScene("MainGameScene");
     }
