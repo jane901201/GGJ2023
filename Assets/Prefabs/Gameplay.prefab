@@ -56,6 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _joystick: {fileID: 5786062987592973095}
+  _mainGameUI: {fileID: 0}
 --- !u!114 &5110103190199542101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +78,11 @@ MonoBehaviour:
   _colliderGenerator: {fileID: 6115458936701991781}
   _rebornHelper: {fileID: 5712344357868516324}
   _fromAabb: {fileID: 6425771410523959924}
+  _maxLife: 1000
+  _life: 0
+  downLifeSpeed: 50
+  _initHardness: 0
+  _hardness: 0
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +169,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6115458936701991780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -452,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7523661030745970912, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7523661030745970912, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
       propertyPath: m_LocalRotation.w
@@ -592,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 856133568617701939, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_Name
