@@ -30,6 +30,7 @@ public abstract class BaseSceneObject : MonoBehaviour
     {
         if (_audio != null)
         {
+            audioSource.Stop();
             audioSource.PlayOneShot(_audio);
         }
     }

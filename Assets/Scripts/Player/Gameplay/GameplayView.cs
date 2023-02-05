@@ -18,6 +18,11 @@ public class GameplayView : MonoBehaviour
         _mainGameUI.SetHumidityText(humidity);
     }
 
+    public void SetResistText(int resist)
+    {
+        _mainGameUI.SetResistText(resist);
+    }
+
     public void SetScore(int currentScore, int historyScore)
     {
         _gameOverUI.SetCurrentScore(currentScore);

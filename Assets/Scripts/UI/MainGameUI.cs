@@ -22,7 +22,7 @@ public class MainGameUI : MonoBehaviour
 
     public void SetResistText(int resist)
     {
-        resistText.text = resistText.ToString();
+        resistText.text = resist.ToString();
     }
 
     public void SetCountDownText(float seconds)
