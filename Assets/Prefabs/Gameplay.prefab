@@ -88,6 +88,7 @@ MonoBehaviour:
   downLifeSpeed: 50
   _initHardness: 0
   _hardness: 0
+  waitAnimationSeconds: 4
   _angularOffset: 0.3
   _resetTime: 1
   _maxDepth: 0
