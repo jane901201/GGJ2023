@@ -10,12 +10,14 @@ public class RandomPickOnWhole : IRebornMechanism
     private readonly LineRendererManager _lineRendererManager;
     private readonly Transform _lineRoot;
     private readonly LineParameters _lineParameters;
+    private readonly float _angularOffset;
 
-    public RandomPickOnWhole(LineRendererManager lineRendererManager, Transform lineRoot, LineParameters parameters)
+    public RandomPickOnWhole(LineRendererManager lineRendererManager, Transform lineRoot, LineParameters parameters, float angularOffset)
     {
         _lineRendererManager = lineRendererManager;
         _lineRoot = lineRoot;
         _lineParameters = parameters;
+        _angularOffset = angularOffset;
     }
 
     (Vector3 newDir, LineNode lineNode) IRebornMechanism.GetDest()
@@ -42,7 +44,11 @@ public class RandomPickOnWhole : IRebornMechanism
         Vector3 vec = to - from;
         var normal = new Vector3(vec.y, -vec.x, 0);
         normal *= Mathf.Sign(Random.Range(-1, 1));
-        return new ValueTuple<Vector3, LineNode>(normal, new LineNode(line, ind));
+        var vecQ = Quaternion.FromToRotation(Vector3.right, vec);
+        var normalQ = Quaternion.FromToRotation(Vector3.right, normal);
+        var newQ = Quaternion.Lerp(normalQ, vecQ, _angularOffset);
+        var newNormal = newQ * Vector3.right;
+        return new ValueTuple<Vector3, LineNode>(newNormal, new LineNode(line, ind));
     }
 
     private Vector3 _GetLineRootPos()
