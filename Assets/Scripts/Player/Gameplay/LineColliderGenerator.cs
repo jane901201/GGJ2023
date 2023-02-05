@@ -95,6 +95,7 @@ public class LineColliderGenerator : MonoBehaviour
         {
             var newGo = new GameObject();
             var newCollider = newGo.AddComponent<BoxCollider2D>();
+            newGo.AddComponent<SelfSceneObject>();
             _colliderPool.Add(newCollider);
         }
         
