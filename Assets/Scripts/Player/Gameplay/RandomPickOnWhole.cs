@@ -30,8 +30,8 @@ public class RandomPickOnWhole : IRebornMechanism
                 for (var index = 1; index < count; index++)
                 {
                     Vector3 position = lineRenderer.GetPosition(index);
-                    if (Vector3.Distance(linePos, position) > _lineParameters.CircleRadius)
-                        segments.Add((lineRenderer, index));
+                    /*if (Vector3.Distance(linePos, position) > _lineParameters.CircleRadius)*/
+                    segments.Add((lineRenderer, index));
                 }
             }
         }
