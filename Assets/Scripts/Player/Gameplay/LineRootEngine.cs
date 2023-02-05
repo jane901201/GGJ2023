@@ -19,13 +19,16 @@ public class LineRootEngine : MonoBehaviour
     private Transform _lineRootTransform;
     private CancellationTokenSource _tokenSrc;
 
-    public void Fire(Vector3 position, Vector3 direction)
+    private GameplayPresenter _gameplayPresenter;
+
+    public void Fire(Vector3 position, Vector3 direction, GameplayPresenter gameplayPresenter)
     {
         if(_tokenSrc != null)
             return;
         _tokenSrc = new CancellationTokenSource();
         _lineRootTransform.position = position;
         _currentDirection = direction;
+        _gameplayPresenter = gameplayPresenter;
         _UpdateLineRoot().Forget();
     }
 
@@ -43,7 +46,7 @@ public class LineRootEngine : MonoBehaviour
         {
             _UpdateDirection();
             Vector3 rootPos = _lineRootTransform.position;
-            _lineRootTransform.position = rootPos + _currentDirection * (_speed * Time.deltaTime);
+            _lineRootTransform.position = rootPos + _currentDirection * (_gameplayPresenter.GetFinalSpeed(_speed) * Time.deltaTime);
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
     }
