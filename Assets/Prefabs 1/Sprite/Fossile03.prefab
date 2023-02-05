@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6401970079607031783}
   - component: {fileID: 4060978385241152022}
   - component: {fileID: 477639461295912767}
+  - component: {fileID: 7032945292783531254}
   m_Layer: 0
   m_Name: Fossile03
   m_TagString: Untagged
@@ -133,6 +134,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &7032945292783531254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464630879093098284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f96b5897324443f9c901036be4de23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audio: {fileID: 8300000, guid: 71119d33ee526284b9ffcaa6dc1848ff, type: 3}
+  Hardness: 1
 --- !u!1 &2148711373388544937
 GameObject:
   m_ObjectHideFlags: 0
