@@ -20,6 +20,8 @@ public class GameplayPresenter : MonoBehaviour
     private LineColliderGenerator _colliderGenerator;
     [SerializeField]
     private RebornHelper _rebornHelper;
+    [SerializeField]
+    private RandomPickFromAabb _fromAabb;
 
     [SerializeField] private float _maxLife = 1000;
     [SerializeField] private float _life;
@@ -33,7 +35,13 @@ public class GameplayPresenter : MonoBehaviour
     {
         _drawerManager = new LineDrawerManager(_parameters);
         _colliderGenerator.Initialize(_drawerManager);
-        _rebornHelper.Initialize(new RandomPickOnLatestLine(_lineRendererManager), () => _gameplayState == GameplayState.Reborn);
+        // Pick from latest
+        //_rebornHelper.Initialize(new RandomPickOnLatestLine(_lineRendererManager), () => _gameplayState == GameplayState.Reborn);
+        // From aabb
+        //_fromAabb.Initialize(_drawerManager, _lineRoot, _parameters);
+        //_rebornHelper.Initialize(_fromAabb, () => _gameplayState == GameplayState.Reborn);
+        // From whole
+        _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters), () => _gameplayState == GameplayState.Reborn);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
 
         _life = _maxLife;

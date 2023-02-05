@@ -41,4 +41,21 @@ public class LineDrawerManager
         }
         return _getRenderersResult;
     }
+
+    public Bounds GetWholeBounds()
+    {
+        var newBounds = new Bounds();
+        var taken = false;
+        foreach (KeyValuePair<LineRenderer, LineDrawer> kvp in _lineDrawers)
+        {
+            if (!taken)
+            {
+                newBounds = kvp.Value.Aabb;
+                taken = true;
+            }
+            else
+                newBounds.Encapsulate(kvp.Value.Aabb);
+        }
+        return newBounds;
+    }
 }

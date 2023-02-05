@@ -2,15 +2,6 @@ using System;
 
 using UnityEngine;
 
-public enum GameplayState
-{
-    Start,
-    PlayerSession,
-    Reborn,
-    Death,
-    None
-}
-
 public class GameplayView : MonoBehaviour
 {
     [SerializeField]
