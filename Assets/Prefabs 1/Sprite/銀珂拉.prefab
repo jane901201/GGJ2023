@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 8300000, guid: 79cefd22fbaf3ad4bab6ceb0888018fb, type: 3}
-  Life: 1
+  Life: 0
   Score: 0
-  Hardness: 0
+  Hardness: 1
   SpeedChangeRatio: 0
   SpeedChangeDuration: 0
   LifeDownChangeRatio: 0
