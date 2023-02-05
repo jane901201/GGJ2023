@@ -57,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joystick: {fileID: 5786062987592973095}
   _mainGameUI: {fileID: 0}
+  _gameOverUI: {fileID: 0}
 --- !u!114 &5110103190199542101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,11 +79,16 @@ MonoBehaviour:
   _colliderGenerator: {fileID: 6115458936701991781}
   _rebornHelper: {fileID: 5712344357868516324}
   _fromAabb: {fileID: 6425771410523959924}
+  _audioSource: {fileID: 0}
+  _bloodAnimator: {fileID: 0}
+  _bloodThreshold: 30
   _maxLife: 1000
   _life: 0
   downLifeSpeed: 50
   _initHardness: 0
   _hardness: 0
+  _resetTime: 2
+  _maxDepth: 0
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,10 +605,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.84
       objectReference: {fileID: 0}
-    - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 856133568617701939, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_Name
       value: LineRoot
@@ -665,6 +667,11 @@ CircleCollider2D:
 --- !u!4 &1147536326883798757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4689207609309145808, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+  m_PrefabInstance: {fileID: 5692469993148367925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4949913676355155375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 742556342691230106, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
   m_PrefabInstance: {fileID: 5692469993148367925}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5037579212455803843 stripped
@@ -805,6 +812,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5244834238711992860}
     m_Modifications:
+    - target: {fileID: 4033716210638239808, guid: 0ff6f08fb8126f04fb3cd62f07dc7a83, type: 3}
+      propertyPath: _headTransform
+      value: 
+      objectReference: {fileID: 4949913676355155375}
     - target: {fileID: 4033716210638239808, guid: 0ff6f08fb8126f04fb3cd62f07dc7a83, type: 3}
       propertyPath: _collisionSender
       value: 
