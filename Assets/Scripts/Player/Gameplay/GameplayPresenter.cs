@@ -150,6 +150,7 @@ public class GameplayPresenter : MonoBehaviour
             {
                 var effectSceneObject = sceneObject as EffectSceneObject;
                 effectSceneObject.Apply(this);
+                GameObject.Destroy(collider.gameObject);
             }
             else if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Obstacle)
             {

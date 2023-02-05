@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5915078237073611357}
   - component: {fileID: 1055933540992237895}
   - component: {fileID: 286560090479389122}
+  - component: {fileID: 483664753755274519}
   m_Layer: 0
   m_Name: Crystal
   m_TagString: Untagged
@@ -111,3 +112,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2, y: 3.6}
   m_EdgeRadius: 0
+--- !u!114 &483664753755274519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395132031538232976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f96b5897324443f9c901036be4de23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hardness: 4
