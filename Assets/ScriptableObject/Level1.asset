@@ -18,25 +18,52 @@ MonoBehaviour:
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
   - MinDepth: 0
     MaxDepth: 100
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: 0c4b54d8ac0ccf3449e42e0b473cfd8b, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: dd83a61168556fd48b06e8ce8d374860, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: 59a503554e20181449afe9ed9c25e77f, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: efc97cb0d7538a245a0db32295465254, type: 3}
     - Size: {x: 1, y: 1}
-      Weight: 16
+      Weight: 40
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 4
-      Prefab: {fileID: 483584334095371402, guid: d750356286e32334e978b12f8d9dbf87, type: 3}
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: eae479549263c7c419423a82d7961bc6, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 4
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: 85ad1d16d440d2d489768780df63b9fc, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 4
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: 234cea1e8e4d53041ad4e6c727584cb6, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 4
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: 1cd5fa77ca5f45d4fab9ba940fccf48d, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 4
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: 04a159cb3d0ac8b41933258ce57c3334, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 4
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: 5611251d38404274a83bbaff3389a454, type: 3}
