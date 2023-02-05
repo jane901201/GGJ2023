@@ -23,15 +23,15 @@ public class RandomPickOnWhole : IRebornMechanism
         var segments = new List<(LineRenderer, int)>();
         {
             List<LineRenderer> renderers = _lineRendererManager.Renderers;
-            Vector3 linePosb = _GetLineRootPos();
+            Vector3 linePos = _GetLineRootPos();
             foreach (LineRenderer lineRenderer in renderers)
             {
                 int count = lineRenderer.positionCount;
                 for (var index = 1; index < count; index++)
                 {
                     Vector3 position = lineRenderer.GetPosition(index);
-                    if (Vector3.Distance(linePosb, position) > _lineParameters.CircleRadius)
-                        segments.Add((lineRenderer, index));
+                    /*if (Vector3.Distance(linePos, position) > _lineParameters.CircleRadius)*/
+                    segments.Add((lineRenderer, index));
                 }
             }
         }

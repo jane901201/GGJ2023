@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading;
 
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 
 public class GameplayPresenter : MonoBehaviour
@@ -23,6 +25,11 @@ public class GameplayPresenter : MonoBehaviour
     private RebornHelper _rebornHelper;
     [SerializeField]
     private RandomPickFromAabb _fromAabb;
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [SerializeField] private Animator _bloodAnimator;
+    [SerializeField] private float _bloodThreshold = 30;
 
     [SerializeField] private float _maxLife = 1000;
     [SerializeField] private float _life;
@@ -31,12 +38,19 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField] private int _initHardness = 0;
     [SerializeField] private int _hardness;
 
+    [SerializeField]
+    private float _resetTime = 2f;
+    private bool _isResetting;
+
     private List<Effect> _effects = new List<Effect>();
+
+    [SerializeField] private int _maxDepth = 0;
 
     private int _effectScore = 0;
 
     private LineDrawerManager _drawerManager;
     private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource _tickTokenSource;
     private GameplayState _gameplayState = GameplayState.Start;
 
     private void Awake()
@@ -53,11 +67,12 @@ public class GameplayPresenter : MonoBehaviour
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
         _rebornHelper._setCountdownView += _view.SetCountdown;
 
+        _maxDepth = 0;
         _life = _maxLife;
         _hardness = _initHardness;
     }
 
-    private void _StartGameplaySession(Vector3 startPosition, Vector3 startDirection)
+    private void _StartGameplaySession(Vector3 startPosition, Vector3 startDirection, bool first = true)
     {
         if (_cancellationTokenSource != null)
         {
@@ -70,6 +85,11 @@ public class GameplayPresenter : MonoBehaviour
         _lineRoot.position = startPosition;
         drawer.Draw(_cancellationTokenSource.Token, _lineRoot).Forget();
         _lineRootEngine.Fire(startPosition, startDirection, this);
+        if (first)
+            return;
+        _tickTokenSource?.Dispose();
+        _tickTokenSource = new CancellationTokenSource();
+        _TickReset(_tickTokenSource.Token).Forget();
     }
 
     private void _ResumeSession(LineRenderer lineRenderer, Vector3 startDirection)
@@ -84,7 +104,10 @@ public class GameplayPresenter : MonoBehaviour
         Vector3 startPosition = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
         _lineRoot.position = startPosition;
         drawer.Draw(_cancellationTokenSource.Token, _lineRoot).Forget();
-        _lineRootEngine.Fire(startPosition, startDirection, this); 
+        _lineRootEngine.Fire(startPosition, startDirection, this);
+        _tickTokenSource?.Dispose();
+        _tickTokenSource = new CancellationTokenSource();
+        _TickReset(_tickTokenSource.Token).Forget();
     }
 
     private void _StopGameplaySession()
@@ -93,6 +116,9 @@ public class GameplayPresenter : MonoBehaviour
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = null;
+        _tickTokenSource?.Cancel();
+        _tickTokenSource?.Dispose();
+        _tickTokenSource = null;
     }
 
     private void OnDestroy()
@@ -113,10 +139,17 @@ public class GameplayPresenter : MonoBehaviour
         if(node.Index == node.LineRenderer.positionCount - 1)
             _ResumeSession(node.LineRenderer, dir);
         else
-            _StartGameplaySession(node.Position, dir);
+            _StartGameplaySession(node.Position, dir, false);
         _gameplayState = GameplayState.PlayerSession; 
     }
-    
+
+    private async UniTaskVoid _TickReset(CancellationToken token)
+    {
+        _isResetting = true;
+        await UniTask.Delay((int)_resetTime * 1000, cancellationToken: token);
+        _isResetting = false;
+    }
+
     private void _UpdateLife()
     {
         if (_gameplayState != GameplayState.PlayerSession)
@@ -127,6 +160,16 @@ public class GameplayPresenter : MonoBehaviour
         _life = _life - _GetFinalDownLifeSpeed() * Time.deltaTime;
         var humidity = Mathf.Max(0, (int)((100f * _life) / _maxLife));
         _view.SetHumidity(humidity);
+
+        if (humidity <= _bloodThreshold)
+        {
+            _bloodAnimator.gameObject.SetActive(true);
+            _bloodAnimator.speed = 1f + (1f-(humidity/_bloodThreshold)) * 4f;
+        }
+        else
+        {
+            _bloodAnimator.gameObject.SetActive(false);
+        }
         
         if (humidity <= 0)
         {
@@ -141,7 +184,10 @@ public class GameplayPresenter : MonoBehaviour
         var sceneObject = collider.GetComponent<BaseSceneObject>();
         if (sceneObject != null)
         {
-            if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Self)
+            sceneObject.PlayAudio(_audioSource);
+            sceneObject.PlayAnimator();
+
+            if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Self && !_isResetting)
             {
                 Debug.Log("Collide!!");
                 _StopGameplaySession();
@@ -171,6 +217,7 @@ public class GameplayPresenter : MonoBehaviour
     {
         _UpdateLife();
         _UpdateEffects();
+        _maxDepth = Mathf.Max(_maxDepth, _GetCurrentDepth());
         _view.Render(_gameplayState);
     }
 
@@ -211,6 +258,16 @@ public class GameplayPresenter : MonoBehaviour
             }
         }
         return finalSpeed;
+    }
+
+    private int _GetFinalScore()
+    {
+        return _maxDepth * 10 + _effectScore;
+    }
+
+    private int _GetCurrentDepth()
+    {
+        return (int)Mathf.Abs(_lineRoot.position.y);
     }
 
     #region Effect
