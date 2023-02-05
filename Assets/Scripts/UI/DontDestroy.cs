@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
+    public static DontDestroy dontDestroy;
+
+    public SceneObjectSetting SceneObjectSetting;
+
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this);
+        if (dontDestroy != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            dontDestroy = this;
+            DontDestroyOnLoad(this);
+        }
     }
 
     // Update is called once per frame
@@ -16,9 +28,15 @@ public class DontDestroy : MonoBehaviour
         
     }
 
+    public void Inject()
+    {
+        StartCoroutine(_Inject(SceneObjectSetting));
+    }
+
     public void Inject(SceneObjectSetting sceneObjectSetting)
     {
-        StartCoroutine(_Inject(sceneObjectSetting));
+        SceneObjectSetting = sceneObjectSetting;
+        StartCoroutine(_Inject(SceneObjectSetting));
     }
 
     public IEnumerator _Inject(SceneObjectSetting sceneObjectSetting)
@@ -28,7 +46,7 @@ public class DontDestroy : MonoBehaviour
             var levelManager = FindObjectOfType<LevelManager>();
             if (levelManager != null)
             {
-                FindObjectOfType<LevelManager>().Initialize(sceneObjectSetting);
+                FindObjectOfType<LevelManager>().Initialize(SceneObjectSetting);
                 break;
             }
             yield return null;
