@@ -57,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joystick: {fileID: 5786062987592973095}
   _mainGameUI: {fileID: 0}
+  _gameOverUI: {fileID: 0}
 --- !u!114 &5110103190199542101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,11 +79,14 @@ MonoBehaviour:
   _colliderGenerator: {fileID: 6115458936701991781}
   _rebornHelper: {fileID: 5712344357868516324}
   _fromAabb: {fileID: 6425771410523959924}
+  _audioSource: {fileID: 0}
   _maxLife: 1000
   _life: 0
   downLifeSpeed: 50
   _initHardness: 0
   _hardness: 0
+  _resetTime: 2
+  _maxDepth: 0
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,10 +602,6 @@ PrefabInstance:
     - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 856133568617701939, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_Name
