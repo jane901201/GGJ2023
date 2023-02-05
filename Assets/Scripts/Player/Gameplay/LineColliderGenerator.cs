@@ -128,7 +128,7 @@ public class LineColliderGenerator : MonoBehaviour
         {
             Vector3 nodePos = _GetLineNodePos(lineRenderer, nodeIndex);
             Vector3 nextPos = _GetLineNodePos(lineRenderer, nodeIndex + 1);
-            if (!outerAabb.Contains(nodePos) || Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleRadius)
+            if ((!outerAabb.Contains(nodePos) && !outerAabb.Contains(nextPos))|| Vector3.Distance(rootPos, nextPos) <= _lineParameters.CircleRadius)
                 continue;
             _validNodes.Add
             (
