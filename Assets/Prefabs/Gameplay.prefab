@@ -82,12 +82,14 @@ MonoBehaviour:
   _audioSource: {fileID: 0}
   _bloodAnimator: {fileID: 0}
   _bloodThreshold: 30
+  _blackMask: {fileID: 0}
   _maxLife: 1000
   _life: 0
   downLifeSpeed: 50
   _initHardness: 0
   _hardness: 0
-  _resetTime: 2
+  _angularOffset: 0.3
+  _resetTime: 1
   _maxDepth: 0
 --- !u!114 &6425771410523959924
 MonoBehaviour:
@@ -449,6 +451,14 @@ PrefabInstance:
     - target: {fileID: 189340006330243588, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
       propertyPath: m_Name
       value: LineRendererManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620715138342118827, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620715138342118827, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7523661030745970912, guid: a297ffef7b21b3342a742ea9d6ab8717, type: 3}
       propertyPath: m_RootOrder
