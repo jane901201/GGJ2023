@@ -7,9 +7,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] MainGameUI mainGameUI;
     [SerializeField] Transform playerTransform;
 
+    private int currentScore;
+
+
+
     private void Update()
     {
-        mainGameUI.SetRootText((int) Mathf.Abs(playerTransform.position.y));
+        currentScore = (int)Mathf.Abs(playerTransform.position.y);
+        mainGameUI.SetRootText(currentScore);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

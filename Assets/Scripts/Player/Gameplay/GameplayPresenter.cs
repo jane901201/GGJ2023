@@ -136,6 +136,7 @@ public class GameplayPresenter : MonoBehaviour
         {
             _gameplayState = GameplayState.Death;
             _StopGameplaySession();
+            _view.SetScore(0 , 0);
         }
     }
 

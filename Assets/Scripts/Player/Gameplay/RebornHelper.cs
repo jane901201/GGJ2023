@@ -22,5 +22,6 @@ public class RebornHelper : MonoBehaviour
             return;
         if(Input.GetKeyDown(KeyCode.H))
             OnRebornDestinationMade?.Invoke(_rebornMechanism.GetDest());
+        //TODO:倒數3秒重生的UI顯示
     }
 }

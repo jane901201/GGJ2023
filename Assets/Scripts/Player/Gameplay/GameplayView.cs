@@ -8,12 +8,20 @@ public class GameplayView : MonoBehaviour
     public GameObject _joystick;
     [SerializeField]
     private MainGameUI _mainGameUI;
+    [SerializeField]
+    private GameOverUI _gameOverUI;
 
     private GameplayState _state = GameplayState.None;
 
     public void SetHumidity(int humidity)
     {
         _mainGameUI.SetHumidityText(humidity);
+    }
+
+    public void SetScore(int currentScore, int historyScore)
+    {
+        _gameOverUI.SetCurrentScore(currentScore);
+        _gameOverUI.SetHistoryScore(historyScore);
     }
 
     public void Render(GameplayState state)
@@ -43,6 +51,8 @@ public class GameplayView : MonoBehaviour
             case GameplayState.Death:
             {
                 _joystick.SetActive(false);
+                _gameOverUI.gameObject.SetActive(true);
+                _mainGameUI.gameObject.SetActive(false);
                 break;
             }
             case GameplayState.None:
