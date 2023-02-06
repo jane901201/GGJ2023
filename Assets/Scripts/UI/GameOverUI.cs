@@ -6,8 +6,8 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Text currentScoreText;
     [SerializeField] private Text historyScoreText;
 
-    private const string CURRENT_SCORE_TEXT = "分數：";
-    private const string HISTORY_HIGHEST_SCORE_TEXT = "歷史最高分數：";
+    private const string CURRENT_SCORE_TEXT = "Score: ";
+    private const string HISTORY_HIGHEST_SCORE_TEXT = "Highest Score: ";
 
     public void SetCurrentScore(int score)
     {
