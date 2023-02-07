@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b402b84b5c70c4bc4be43f80d5f74772, type: 3}
-  m_Name: SceneObjectSetting
+  m_Name: Level4
   m_EditorClassIdentifier: 
-  LevelId: level2
+  LevelId: level4
   DownLifeSpeed: 0
   Pools:
   - MinDepth: 0
@@ -29,18 +29,32 @@ MonoBehaviour:
       Weight: 1
       IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
-  - MinDepth: 0
-    MaxDepth: 1000
+  - MinDepth: 3
+    MaxDepth: 10
     Objects:
     - Size: {x: 1, y: 1}
-      Weight: 10
+      Weight: 5
       IsRotable: 1
-      Prefab: {fileID: 483584334095371402, guid: ebb2450aee9104943b6481a467f615f7, type: 3}
-    - Size: {x: 1, y: 1}
-      Weight: 10
-      IsRotable: 1
-      Prefab: {fileID: 483584334095371402, guid: 0120adfe32a27457db0b8ea07292e367, type: 3}
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 5
       IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
+  - MinDepth: 11
+    MaxDepth: 15
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 20
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 5
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
+  - MinDepth: 16
+    MaxDepth: 1000
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 20
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}

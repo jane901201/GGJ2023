@@ -202,5 +202,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audio: {fileID: 0}
-  Hardness: 1
+  Hardness: 1000
   DownLife: 1000
