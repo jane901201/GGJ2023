@@ -61,6 +61,13 @@ public class GameplayPresenter : MonoBehaviour
     private CancellationTokenSource _tickTokenSource;
     private GameplayState _gameplayState = GameplayState.Start;
 
+    [SerializeField]
+    private Camera _cam;
+    private float _camSize;
+
+    [SerializeField]
+    private float _zoomOutSpeed = 1.0f;
+
     private void Awake()
     {
         _drawerManager = new LineDrawerManager(_parameters);
@@ -78,6 +85,7 @@ public class GameplayPresenter : MonoBehaviour
         _maxDepth = 0;
         _life = _maxLife;
         _hardness = _initHardness;
+        _camSize = _cam.orthographicSize;
     }
 
     private void _StartGameplaySession(Vector3 startPosition, Vector3 startDirection, bool first = true)
@@ -87,6 +95,10 @@ public class GameplayPresenter : MonoBehaviour
             Debug.LogError("Should stop gameplay session first.");
             return;
         }
+        _blackMask.gameObject.SetActive(true);
+        _cam.orthographicSize = _camSize;
+        Transform transform1 = _cam.transform;
+        transform1.localPosition = new Vector3(0, 0, transform1.localPosition.z);
         _cancellationTokenSource = new CancellationTokenSource();
         LineRenderer lineRenderer = _lineRendererManager.GetNewRenderer();
         LineDrawer drawer = _drawerManager.GetLineDrawer(lineRenderer);
@@ -187,16 +199,50 @@ public class GameplayPresenter : MonoBehaviour
         
         if (humidity <= 0)
         {
-            _gameplayState = GameplayState.Death;
+            _gameplayState = GameplayState.BeforeDeath;
+            _blackMask.gameObject.SetActive(false);
+            _bloodAnimator.gameObject.SetActive(false);
             _StopGameplaySession();
 
-            int historyScore = PlayerPrefs.GetInt("HISTORY", 0);
-            int currentScore = _GetFinalScore();
-            historyScore = Mathf.Max(currentScore, historyScore);
-            PlayerPrefs.SetInt("HISTORY", historyScore);
-
-            _view.SetScore(currentScore, historyScore);
+            StartCoroutine(nameof(_TransitionToDeath));
         }
+    }
+
+    private IEnumerator _TransitionToDeath()
+    {
+        var bounds = _drawerManager.GetWholeBounds();
+        var camTrans = _cam.transform;
+        var position = camTrans.position;
+        var newCamPos = new Vector3(bounds.center.x, bounds.center.y, position.z);
+        var proj = _cam.projectionMatrix;
+        var maxSizeScale = Mathf.Max(bounds.size.x * proj.m00, bounds.size.y * proj.m11) * 0.6f;
+
+        var scaleTime = maxSizeScale / _zoomOutSpeed;
+        float t = 0.0f;
+        var distanceToCenter = Vector3.Distance(newCamPos, position);
+        var direction = Vector3.Normalize(newCamPos - position);
+
+        while (t < scaleTime)
+        {
+            _cam.orthographicSize = _camSize * Mathf.SmoothStep(1, maxSizeScale, t / scaleTime);
+            var newPos = position + direction * Mathf.SmoothStep(1, distanceToCenter, t / scaleTime);
+            camTrans.position = new Vector3(newPos.x, newPos.y, position.z);
+            yield return null;
+            t += Time.deltaTime;
+        }
+
+        _cam.orthographicSize = _camSize * maxSizeScale;
+        camTrans.position = newCamPos;
+        
+        _gameplayState = GameplayState.Death;
+        int historyScore = PlayerPrefs.GetInt("HISTORY", 0);
+        int currentScore = _GetFinalScore();
+        historyScore = Mathf.Max(currentScore, historyScore);
+        PlayerPrefs.SetInt("HISTORY", historyScore);
+
+        _view.SetScore(currentScore, historyScore);
+
+        yield break;
     }
 
     private void _OnCollideToSomething(Collider2D collider)

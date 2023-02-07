@@ -358,6 +358,8 @@ MonoBehaviour:
   _angularOffset: 0.3
   _resetTime: 2
   _maxDepth: 0
+  _cam: {fileID: 1781282063}
+  _zoomOutSpeed: 1
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
