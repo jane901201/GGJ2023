@@ -65,6 +65,13 @@ public class GameplayView : MonoBehaviour
                 _mainGameUI.gameObject.SetActive(false);
                 break;
             }
+            case GameplayState.BeforeDeath:
+            {
+                _joystick.SetActive(false);
+                _gameOverUI.gameObject.SetActive(false);
+                _mainGameUI.gameObject.SetActive(false);
+                break;
+            }
             case GameplayState.None:
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
