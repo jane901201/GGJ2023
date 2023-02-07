@@ -29,6 +29,9 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
+    [SerializeField]
+    private LevelManager _levelManager;
+
     [SerializeField] private Animator _bloodAnimator;
     [SerializeField] private float _bloodThreshold = 30;
 
@@ -86,6 +89,9 @@ public class GameplayPresenter : MonoBehaviour
         _life = _maxLife;
         _hardness = _initHardness;
         _camSize = _cam.orthographicSize;
+
+        var humidity = Mathf.Clamp((int)((100f * _life) / _maxLife), 0, 100);
+        _view.SetHumidity(humidity);
     }
 
     private void _StartGameplaySession(Vector3 startPosition, Vector3 startDirection, bool first = true)
@@ -155,6 +161,12 @@ public class GameplayPresenter : MonoBehaviour
     private IEnumerator WaitForAnimationComplete()
     {
         yield return new WaitForSeconds(waitAnimationSeconds);
+        while (!_levelManager.IsInit)
+        {
+            yield return null;
+        }
+        downLifeSpeed = _levelManager.DownLifeSpeed;
+
         _StartGameplaySession(new Vector3(0, 0, 0), new Vector3(0, -1, 0));
         _gameplayState = GameplayState.PlayerSession;
     }
@@ -184,7 +196,7 @@ public class GameplayPresenter : MonoBehaviour
         }
 
         _life = _life - _GetFinalDownLifeSpeed() * Time.deltaTime;
-        var humidity = Mathf.Max(0, (int)((100f * _life) / _maxLife));
+        var humidity = Mathf.Clamp((int)((100f * _life) / _maxLife), 0, 100);
         _view.SetHumidity(humidity);
 
         if (humidity <= _bloodThreshold)
@@ -235,10 +247,12 @@ public class GameplayPresenter : MonoBehaviour
         camTrans.position = newCamPos;
         
         _gameplayState = GameplayState.Death;
-        int historyScore = PlayerPrefs.GetInt("HISTORY", 0);
+
+        var historyScoreKey = string.Format("HISTORY_{0}", _levelManager.LevelId);
+        int historyScore = PlayerPrefs.GetInt(historyScoreKey, 0);
         int currentScore = _GetFinalScore();
         historyScore = Mathf.Max(currentScore, historyScore);
-        PlayerPrefs.SetInt("HISTORY", historyScore);
+        PlayerPrefs.SetInt(historyScoreKey, historyScore);
 
         _view.SetScore(currentScore, historyScore);
 
@@ -273,8 +287,21 @@ public class GameplayPresenter : MonoBehaviour
                 if (obstableSceneObject.Hardness > _hardness)
                 {
                     Debug.Log("Collide!!");
-                    _StopGameplaySession();
-                    _gameplayState = GameplayState.Reborn;
+                    _life -= obstableSceneObject.DownLife;
+                    if (_life <= 0)
+                    {
+                        _gameplayState = GameplayState.BeforeDeath;
+                        _blackMask.gameObject.SetActive(false);
+                        _bloodAnimator.gameObject.SetActive(false);
+                        _StopGameplaySession();
+
+                        StartCoroutine(nameof(_TransitionToDeath));
+                    }
+                    else
+                    {
+                        _StopGameplaySession();
+                        _gameplayState = GameplayState.Reborn;
+                    }
                 }
             }
         }

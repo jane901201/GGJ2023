@@ -16,9 +16,15 @@ public class LevelManager : MonoBehaviour
     [Header("Player Object")]
     [SerializeField] private GameObject _obj;
 
+    public bool IsInit { get; private set; } = false;
+
+    public string LevelId { get => _sceneObjectSetting != null ? _sceneObjectSetting.LevelId : string.Empty; }
+    public float DownLifeSpeed { get => _sceneObjectSetting != null ? _sceneObjectSetting.DownLifeSpeed : 50f; }
+
     public void Initialize(SceneObjectSetting sceneObjectSetting)
     {
         _sceneObjectSetting = sceneObjectSetting;
+        IsInit = true;
         StartCoroutine(_AutoGenerate());
     }
 
@@ -116,7 +122,7 @@ public class LevelManager : MonoBehaviour
                                 hasGenerated = true;
                                 break;
                             }
-                            Debug.Log(sceneObject1?.Prefab);
+                            // Debug.Log(sceneObject1?.Prefab);
                         }
 
                         // Debug.LogFormat("({0},{1}) <-> ({2},{3})", rightMaxBound, yMin, xMax, yMax);
@@ -124,7 +130,7 @@ public class LevelManager : MonoBehaviour
                         if (maxSize2.x >= _generateThreshold && maxSize2.y >= _generateThreshold)
                         {
                             var sceneObject2 = _sceneObjectSetting.RandomPick(yMin, maxSize2);
-                            Debug.Log(sceneObject2?.Prefab);
+                            // Debug.Log(sceneObject2?.Prefab);
                             if (sceneObject2 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject2.Prefab);

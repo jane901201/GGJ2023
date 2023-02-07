@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b402b84b5c70c4bc4be43f80d5f74772, type: 3}
   m_Name: SceneObjectSetting
   m_EditorClassIdentifier: 
+  LevelId: level2
+  DownLifeSpeed: 0
   Pools:
   - MinDepth: 0
     MaxDepth: 0
@@ -19,16 +21,16 @@ MonoBehaviour:
     - Size: {x: 1, y: 1}
       Weight: 1
       IsRotable: 0
-      Prefab: {fileID: 483584334095371402, guid: b6ceaafb9e2bc46b495bc6dc98468684, type: 3}
-  - MinDepth: 0
+      Prefab: {fileID: 483584334095371402, guid: c73f33f48d57d41ecadcfd98680b8d3f, type: 3}
+  - MinDepth: 1
     MaxDepth: 2
     Objects:
-    - Size: {x: 2, y: 1}
+    - Size: {x: 1, y: 1}
       Weight: 1
       IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
   - MinDepth: 0
-    MaxDepth: 100
+    MaxDepth: 1000
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 10

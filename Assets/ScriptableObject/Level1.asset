@@ -12,9 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b402b84b5c70c4bc4be43f80d5f74772, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
+  LevelId: level1
+  DownLifeSpeed: 50
   Pools:
   - MinDepth: 0
-    MaxDepth: 1
+    MaxDepth: 0
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: b6ceaafb9e2bc46b495bc6dc98468684, type: 3}
+  - MinDepth: 1
+    MaxDepth: 2
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 1
