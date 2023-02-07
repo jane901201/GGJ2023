@@ -14,20 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pools:
   - MinDepth: 0
-    MaxDepth: 1
+    MaxDepth: 0
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: b6ceaafb9e2bc46b495bc6dc98468684, type: 3}
+  - MinDepth: 0
+    MaxDepth: 2
     Objects:
     - Size: {x: 2, y: 1}
       Weight: 1
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
   - MinDepth: 0
     MaxDepth: 100
     Objects:
     - Size: {x: 1, y: 1}
       Weight: 10
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: ebb2450aee9104943b6481a467f615f7, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 10
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: 0120adfe32a27457db0b8ea07292e367, type: 3}
     - Size: {x: 1, y: 1}
       Weight: 5
+      IsRotable: 1
       Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
