@@ -16,9 +16,15 @@ public class LevelManager : MonoBehaviour
     [Header("Player Object")]
     [SerializeField] private GameObject _obj;
 
+    public bool IsInit { get; private set; } = false;
+
+    public string LevelId { get => _sceneObjectSetting != null ? _sceneObjectSetting.LevelId : string.Empty; }
+    public float DownLifeSpeed { get => _sceneObjectSetting != null ? _sceneObjectSetting.DownLifeSpeed : 50f; }
+
     public void Initialize(SceneObjectSetting sceneObjectSetting)
     {
         _sceneObjectSetting = sceneObjectSetting;
+        IsInit = true;
         StartCoroutine(_AutoGenerate());
     }
 
@@ -73,7 +79,7 @@ public class LevelManager : MonoBehaviour
                             rightMaxBound = xMin;
 
                             var obj = GameObject.Instantiate(sceneObject.Prefab);
-                            obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, -(yMin + sceneObject.Size.y/2f)) * _unitLength;
+                            obj.transform.position = new Vector3(leftMinBound+sceneObject.Size.x/2f, -(yMin + sceneObject.Size.y/2f - 1)) * _unitLength;
                             if (sceneObject.IsRotable)
                             {
                                 obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
@@ -101,7 +107,7 @@ public class LevelManager : MonoBehaviour
                             if (sceneObject1 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject1.Prefab);
-                                obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, -(yMin + sceneObject1.Size.y/2f)) * _unitLength;
+                                obj.transform.position = new Vector3(leftMinBound-sceneObject1.Size.x/2f+1f, -(yMin + sceneObject1.Size.y/2f - 1)) * _unitLength;
                                 if (sceneObject1.IsRotable)
                                 {
                                     obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);
@@ -116,7 +122,7 @@ public class LevelManager : MonoBehaviour
                                 hasGenerated = true;
                                 break;
                             }
-                            Debug.Log(sceneObject1?.Prefab);
+                            // Debug.Log(sceneObject1?.Prefab);
                         }
 
                         // Debug.LogFormat("({0},{1}) <-> ({2},{3})", rightMaxBound, yMin, xMax, yMax);
@@ -124,11 +130,11 @@ public class LevelManager : MonoBehaviour
                         if (maxSize2.x >= _generateThreshold && maxSize2.y >= _generateThreshold)
                         {
                             var sceneObject2 = _sceneObjectSetting.RandomPick(yMin, maxSize2);
-                            Debug.Log(sceneObject2?.Prefab);
+                            // Debug.Log(sceneObject2?.Prefab);
                             if (sceneObject2 != null)
                             {
                                 var obj = GameObject.Instantiate(sceneObject2.Prefab);
-                                obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, -(yMin + sceneObject2.Size.y/2f)) * _unitLength;
+                                obj.transform.position = new Vector3(rightMaxBound+sceneObject2.Size.x/2f, -(yMin + sceneObject2.Size.y/2f - 1)) * _unitLength;
                                 if (sceneObject2.IsRotable)
                                 {
                                     obj.transform.eulerAngles = new Vector3(0f, 0f, Random.Range(0, 4) * 90f);

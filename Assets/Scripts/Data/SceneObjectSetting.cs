@@ -15,7 +15,6 @@ public class SceneObjectSetting : ScriptableObject
 
         public SceneObject RandomPick(Vector2Int maxSize)
         {
-            Debug.Log(maxSize);
             var validObjs = Objects.Where(obj => obj.Size.x <= maxSize.x && obj.Size.y <= maxSize.y).ToList();
             if (validObjs.Count == 0)
             {
@@ -47,6 +46,8 @@ public class SceneObjectSetting : ScriptableObject
         public GameObject Prefab;
     }
 
+    public string LevelId;
+    public float DownLifeSpeed;
     public List<SceneObjectPool> Pools;
 
     public SceneObject RandomPick(int depth, Vector2Int maxSize)

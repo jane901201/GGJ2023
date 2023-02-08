@@ -31,7 +31,7 @@ namespace Assets.Scripts.Misc
                 float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textUnitSizeX;
                 transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y);
             }
-            if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textUnitSizeX)
+            if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textUnitSizeY)
             {
                 float offsetPositionY = (cameraTransform.position.y - transform.position.y) % textUnitSizeY;
                 transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offsetPositionY);
