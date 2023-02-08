@@ -58,7 +58,6 @@ Shader "Unlit/BackgroundShader"
             float2 _GetUv(const float x, const float y)
             {
                 return float2(x / _TexMagnifier, y / _TexMagnifier);
-                 //return float2(x * _CamSize.x + _CamCenter.x, y * _CamSize.y + _CamCenter.y);
             }
             
             fixed4 frag (v2f i) : SV_Target
