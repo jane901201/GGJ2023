@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5233169377505590228}
   - component: {fileID: 2074854672090087627}
   m_Layer: 0
-  m_Name: "\u9280\u73C2\u62C9"
+  m_Name: Silverkela
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

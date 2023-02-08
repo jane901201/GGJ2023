@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1846614898502477205}
   - component: {fileID: 1886048781899726659}
   m_Layer: 0
-  m_Name: Pollution_Sprite
+  m_Name: Pollution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

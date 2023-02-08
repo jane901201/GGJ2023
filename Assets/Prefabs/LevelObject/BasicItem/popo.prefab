@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8760525887600248035}
   - component: {fileID: 507614190291677989}
   m_Layer: 0
-  m_Name: "\u6392\u6CC4\u7269"
+  m_Name: popo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
