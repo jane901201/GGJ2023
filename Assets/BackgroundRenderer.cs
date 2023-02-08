@@ -3,6 +3,7 @@ using UnityEditor;
 #endif
 
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [ExecuteAlways]
 public class BackgroundRenderer : MonoBehaviour
@@ -67,6 +68,6 @@ public class BackgroundRenderer : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(_quadMesh);
+        CoreUtils.Destroy(_quadMesh);
     }
 }
