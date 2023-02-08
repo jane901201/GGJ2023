@@ -3,6 +3,7 @@ Shader "Unlit/BackgroundShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _SkyTex ("Texture", 2D) = "black" {}
     }
     SubShader
     {
@@ -39,6 +40,7 @@ Shader "Unlit/BackgroundShader"
             };
 
             sampler2D _MainTex;
+            sampler2D _SkyTex;
             float4 _MainTex_ST;
             float _TexMagnifier;
             
@@ -64,7 +66,7 @@ Shader "Unlit/BackgroundShader"
                 const float2 uv = _GetUv(i.positionWS.x, i.positionWS.y);
                 
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, uv);
+                fixed4 col = i.positionWS.y <= 0 ? tex2D(_MainTex, uv) : tex2D(_SkyTex, uv);
                 return col;
             }
 
