@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b402b84b5c70c4bc4be43f80d5f74772, type: 3}
+  m_Name: Level4
+  m_EditorClassIdentifier: 
+  LevelId: level4
+  DownLifeSpeed: 0
+  Pools:
+  - MinDepth: 0
+    MaxDepth: 0
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      IsRotable: 0
+      Prefab: {fileID: 483584334095371402, guid: c73f33f48d57d41ecadcfd98680b8d3f, type: 3}
+  - MinDepth: 1
+    MaxDepth: 2
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 1
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
+  - MinDepth: 3
+    MaxDepth: 10
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 5
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 5
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
+  - MinDepth: 11
+    MaxDepth: 15
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 20
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}
+    - Size: {x: 1, y: 1}
+      Weight: 5
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: d09f22cacc583a840a20f7380aeaedab, type: 3}
+  - MinDepth: 16
+    MaxDepth: 1000
+    Objects:
+    - Size: {x: 1, y: 1}
+      Weight: 20
+      IsRotable: 1
+      Prefab: {fileID: 483584334095371402, guid: abfe77526c1c742d3a184511ef0316b1, type: 3}
