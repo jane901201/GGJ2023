@@ -29,7 +29,8 @@ public class RandomPickOnWhole : IRebornMechanism
             foreach (LineRenderer lineRenderer in renderers)
             {
                 int count = lineRenderer.positionCount;
-                for (var index = 1; index < count; index++)
+                // Ignore the first and the last
+                for (var index = 1; index < count - 1; index++)
                 {
                     Vector3 position = lineRenderer.GetPosition(index);
                     /*if (Vector3.Distance(linePos, position) > _lineParameters.CircleRadius)*/

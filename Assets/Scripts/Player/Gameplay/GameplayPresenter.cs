@@ -6,6 +6,9 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
+
 public class GameplayPresenter : MonoBehaviour
 {
     [SerializeField]
@@ -22,8 +25,6 @@ public class GameplayPresenter : MonoBehaviour
     private Transform _lineRoot;
     [SerializeField]
     private LineColliderGenerator _colliderGenerator;
-    [SerializeField]
-    private RebornHelper _rebornHelper;
     [SerializeField]
     private RandomPickFromAabb _fromAabb;
     [SerializeField]
@@ -71,19 +72,27 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private float _zoomOutSpeed = 1.0f;
 
+    private IRebornMechanism _rebornMechanism;
+
+    [SerializeField]
+    private float _rebornCountdownSeconds = 3f;
+    [SerializeField]
+    private Transform _headTransform;
+    [Range(0, 1)]
+    [SerializeField]
+    private float _rebornCamMoveSpan = 0.8f;
+
     private void Awake()
     {
         _drawerManager = new LineDrawerManager(_parameters);
         _colliderGenerator.Initialize(_drawerManager);
         // Pick from latest
-        //_rebornHelper.Initialize(new RandomPickOnLatestLine(_lineRendererManager), () => _gameplayState == GameplayState.Reborn);
+        //_rebornMechanism = new RandomPickOnLatestLine(_lineRendererManager);
         // From aabb
         //_fromAabb.Initialize(_drawerManager, _lineRoot, _parameters);
-        //_rebornHelper.Initialize(_fromAabb, () => _gameplayState == GameplayState.Reborn);
+        // _rebornMechanism = _fromAabb;
         // From whole
-        _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset), () => _gameplayState == GameplayState.Reborn);
-        _rebornHelper.OnRebornDestinationMade += _StartNewSession;
-        _rebornHelper._setCountdownView += _view.SetCountdown;
+        _rebornMechanism = new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset);
 
         _maxDepth = 0;
         _life = _maxLife;
@@ -183,7 +192,6 @@ public class GameplayPresenter : MonoBehaviour
 
     private async UniTaskVoid _TickReset(CancellationToken token)
     {
-        _isResetting = true;
         await UniTask.Delay((int)_resetTime * 1000, cancellationToken: token);
         _isResetting = false;
     }
@@ -271,7 +279,7 @@ public class GameplayPresenter : MonoBehaviour
             {
                 Debug.Log("Collide!!");
                 _StopGameplaySession();
-                _gameplayState = GameplayState.Reborn;
+                _Reborn();
             }
             else if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Effect)
             {
@@ -300,11 +308,36 @@ public class GameplayPresenter : MonoBehaviour
                     else
                     {
                         _StopGameplaySession();
-                        _gameplayState = GameplayState.Reborn;
+                        _Reborn();
                     }
                 }
             }
         }
+    }
+
+    private void _Reborn()
+    {
+        _DuplicateHead();
+        
+        _gameplayState = GameplayState.Reborn;
+        var param = _rebornMechanism.GetDest(); 
+        (Vector3 dir, LineNode node) = param;
+        Vector3 newPos;
+        Quaternion newDir;
+        if (node.Index == node.LineRenderer.positionCount - 1)
+            newPos = node.LineRenderer.GetPosition(node.LineRenderer.positionCount - 1);
+        else
+            newPos = node.Position;
+        newDir = Quaternion.FromToRotation(Vector3.right, dir);
+
+        _isResetting = true;
+
+        var camPos = _cam.transform.position;
+        _lineRoot.position = newPos;
+        _headTransform.rotation = newDir;
+
+        StartCoroutine(_MoveCamFromTo(camPos, new Vector3(newPos.x, newPos.y, camPos.z)));
+        StartCoroutine(_Countdown(param));
     }
 
     private void Update()
@@ -366,6 +399,50 @@ public class GameplayPresenter : MonoBehaviour
     private int _GetCurrentDepth()
     {
         return (int)Mathf.Abs(_lineRoot.position.y);
+    }
+
+    private IEnumerator _Countdown((Vector3 newDir, LineNode node) param)
+    {
+        float currentSeconds = _rebornCountdownSeconds;
+        while (currentSeconds > 0)
+        {
+            if (currentSeconds > 0)
+            {
+                _view.SetCountdown(currentSeconds);
+                Debug.Log("Seconds " + currentSeconds);
+                yield return new WaitForSeconds(1f);
+                currentSeconds--;
+            }
+            if (currentSeconds == 0)
+                _view.SetCountdown(currentSeconds);
+        }
+        
+        _StartNewSession(param);
+    }
+
+    private void _DuplicateHead()
+    {
+        Transform transform1;
+        Instantiate(_headTransform.gameObject, (transform1 = _headTransform.transform).position, transform1.rotation);
+    }
+
+    private IEnumerator _MoveCamFromTo(Vector3 from, Vector3 to)
+    {
+        var startTime = 0.0f;
+        Transform camTransform = _cam.transform;
+        float localZ = camTransform.localPosition.z;
+        camTransform.SetParent(transform);
+        Vector3 dir = Vector3.Normalize(to - from);
+        float dist = Vector3.Distance(to, from);
+        var moveTime = _rebornCountdownSeconds * _rebornCamMoveSpan;
+        while (startTime <= moveTime)
+        {
+            camTransform.position = from + Mathf.SmoothStep(0, dist, startTime / moveTime) * dir;
+            yield return null;
+            startTime += Time.deltaTime;
+        }
+        camTransform.SetParent(_lineRoot);
+        camTransform.localPosition = new Vector3(0, 0, localZ);
     }
 
     #region Effect
