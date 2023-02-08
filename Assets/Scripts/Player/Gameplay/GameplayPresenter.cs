@@ -6,6 +6,9 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
+
 public class GameplayPresenter : MonoBehaviour
 {
     [SerializeField]
@@ -71,17 +74,22 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private float _zoomOutSpeed = 1.0f;
 
+    private IRebornMechanism _rebornMechanism;
+
+    [SerializeField]
+    private float _rebornCountdownSeconds = 3f;
+
     private void Awake()
     {
         _drawerManager = new LineDrawerManager(_parameters);
         _colliderGenerator.Initialize(_drawerManager);
         // Pick from latest
-        //_rebornHelper.Initialize(new RandomPickOnLatestLine(_lineRendererManager), () => _gameplayState == GameplayState.Reborn);
+        //_rebornMechanism = new RandomPickOnLatestLine(_lineRendererManager);
         // From aabb
         //_fromAabb.Initialize(_drawerManager, _lineRoot, _parameters);
-        //_rebornHelper.Initialize(_fromAabb, () => _gameplayState == GameplayState.Reborn);
+        // _rebornMechanism = _fromAabb;
         // From whole
-        _rebornHelper.Initialize(new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset), () => _gameplayState == GameplayState.Reborn);
+        _rebornMechanism = new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset);
         _rebornHelper.OnRebornDestinationMade += _StartNewSession;
         _rebornHelper._setCountdownView += _view.SetCountdown;
 
@@ -271,7 +279,7 @@ public class GameplayPresenter : MonoBehaviour
             {
                 Debug.Log("Collide!!");
                 _StopGameplaySession();
-                _gameplayState = GameplayState.Reborn;
+                _Reborn();
             }
             else if (sceneObject.ObjectType == BaseSceneObject.SceneObjectType.Effect)
             {
@@ -300,11 +308,30 @@ public class GameplayPresenter : MonoBehaviour
                     else
                     {
                         _StopGameplaySession();
-                        _gameplayState = GameplayState.Reborn;
+                        _Reborn();
                     }
                 }
             }
         }
+    }
+
+    private void _Reborn()
+    {
+        _gameplayState = GameplayState.Reborn;
+        var param = _rebornMechanism.GetDest(); 
+        (Vector3 dir, LineNode node) = param;
+        Vector3 newPos;
+        Quaternion newDir;
+        if (node.Index == node.LineRenderer.positionCount - 1)
+            newPos = node.LineRenderer.GetPosition(node.LineRenderer.positionCount - 1);
+        else
+            newPos = node.Position;
+        newDir = UnityEngine.Quaternion.FromToRotation(Vector3.right, dir);
+
+        _lineRoot.position = newPos;
+        _lineRoot.rotation = newDir;
+
+        StartCoroutine(Countdown(param));
     }
 
     private void Update()
@@ -366,6 +393,25 @@ public class GameplayPresenter : MonoBehaviour
     private int _GetCurrentDepth()
     {
         return (int)Mathf.Abs(_lineRoot.position.y);
+    }
+
+    private IEnumerator Countdown((Vector3 newDir, LineNode node) param)
+    {
+        float currentSeconds = _rebornCountdownSeconds;
+        while (currentSeconds > 0)
+        {
+            if (currentSeconds > 0)
+            {
+                _view.SetCountdown(currentSeconds);
+                Debug.Log("Seconds " + currentSeconds);
+                yield return new WaitForSeconds(1f);
+                currentSeconds--;
+            }
+            if (currentSeconds == 0)
+                _view.SetCountdown(currentSeconds);
+        }
+        
+        _StartNewSession(param);
     }
 
     #region Effect
