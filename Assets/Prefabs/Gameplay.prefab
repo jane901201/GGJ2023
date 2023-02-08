@@ -359,7 +359,6 @@ MonoBehaviour:
   _lineRendererManager: {fileID: 212687509368106787}
   _lineRoot: {fileID: 1147536326883798757}
   _colliderGenerator: {fileID: 6115458936701991781}
-  _rebornHelper: {fileID: 0}
   _fromAabb: {fileID: 6425771410523959924}
   _audioSource: {fileID: 1781282064}
   _levelManager: {fileID: 0}
@@ -378,6 +377,7 @@ MonoBehaviour:
   _cam: {fileID: 1781282063}
   _zoomOutSpeed: 1
   _rebornCountdownSeconds: 3
+  _headTransform: {fileID: 4949913676355155375}
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0

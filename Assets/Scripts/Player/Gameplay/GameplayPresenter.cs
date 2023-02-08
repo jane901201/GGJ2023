@@ -76,6 +76,8 @@ public class GameplayPresenter : MonoBehaviour
 
     [SerializeField]
     private float _rebornCountdownSeconds = 3f;
+    [SerializeField]
+    private Transform _headTransform;
 
     private void Awake()
     {
@@ -187,7 +189,6 @@ public class GameplayPresenter : MonoBehaviour
 
     private async UniTaskVoid _TickReset(CancellationToken token)
     {
-        _isResetting = true;
         await UniTask.Delay((int)_resetTime * 1000, cancellationToken: token);
         _isResetting = false;
     }
@@ -322,10 +323,12 @@ public class GameplayPresenter : MonoBehaviour
             newPos = node.LineRenderer.GetPosition(node.LineRenderer.positionCount - 1);
         else
             newPos = node.Position;
-        newDir = UnityEngine.Quaternion.FromToRotation(Vector3.right, dir);
+        newDir = Quaternion.FromToRotation(Vector3.right, dir);
+
+        _isResetting = true;
 
         _lineRoot.position = newPos;
-        _lineRoot.rotation = newDir;
+        _headTransform.rotation = newDir;
 
         StartCoroutine(Countdown(param));
     }
