@@ -78,6 +78,9 @@ public class GameplayPresenter : MonoBehaviour
     private float _rebornCountdownSeconds = 3f;
     [SerializeField]
     private Transform _headTransform;
+    [Range(0, 1)]
+    [SerializeField]
+    private float _rebornCamMoveSpan = 0.8f;
 
     private void Awake()
     {
@@ -329,10 +332,12 @@ public class GameplayPresenter : MonoBehaviour
 
         _isResetting = true;
 
+        var camPos = _cam.transform.position;
         _lineRoot.position = newPos;
         _headTransform.rotation = newDir;
 
-        StartCoroutine(Countdown(param));
+        StartCoroutine(_MoveCamFromTo(camPos, new Vector3(newPos.x, newPos.y, camPos.z)));
+        StartCoroutine(_Countdown(param));
     }
 
     private void Update()
@@ -396,7 +401,7 @@ public class GameplayPresenter : MonoBehaviour
         return (int)Mathf.Abs(_lineRoot.position.y);
     }
 
-    private IEnumerator Countdown((Vector3 newDir, LineNode node) param)
+    private IEnumerator _Countdown((Vector3 newDir, LineNode node) param)
     {
         float currentSeconds = _rebornCountdownSeconds;
         while (currentSeconds > 0)
@@ -419,6 +424,25 @@ public class GameplayPresenter : MonoBehaviour
     {
         Transform transform1;
         Instantiate(_headTransform.gameObject, (transform1 = _headTransform.transform).position, transform1.rotation);
+    }
+
+    private IEnumerator _MoveCamFromTo(Vector3 from, Vector3 to)
+    {
+        var startTime = 0.0f;
+        Transform camTransform = _cam.transform;
+        float localZ = camTransform.localPosition.z;
+        camTransform.SetParent(transform);
+        Vector3 dir = Vector3.Normalize(to - from);
+        float dist = Vector3.Distance(to, from);
+        var moveTime = _rebornCountdownSeconds * _rebornCamMoveSpan;
+        while (startTime <= moveTime)
+        {
+            camTransform.position = from + Mathf.SmoothStep(0, dist, startTime / moveTime) * dir;
+            yield return null;
+            startTime += Time.deltaTime;
+        }
+        camTransform.SetParent(_lineRoot);
+        camTransform.localPosition = new Vector3(0, 0, localZ);
     }
 
     #region Effect
