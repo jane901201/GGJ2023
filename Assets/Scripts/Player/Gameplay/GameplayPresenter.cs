@@ -26,8 +26,6 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private LineColliderGenerator _colliderGenerator;
     [SerializeField]
-    private RebornHelper _rebornHelper;
-    [SerializeField]
     private RandomPickFromAabb _fromAabb;
     [SerializeField]
     private AudioSource _audioSource;
@@ -90,8 +88,6 @@ public class GameplayPresenter : MonoBehaviour
         // _rebornMechanism = _fromAabb;
         // From whole
         _rebornMechanism = new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset);
-        _rebornHelper.OnRebornDestinationMade += _StartNewSession;
-        _rebornHelper._setCountdownView += _view.SetCountdown;
 
         _maxDepth = 0;
         _life = _maxLife;
