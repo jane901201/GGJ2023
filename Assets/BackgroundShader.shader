@@ -42,7 +42,7 @@ Shader "Unlit/BackgroundShader"
             sampler2D _MainTex;
             sampler2D _SkyTex;
             float4 _MainTex_ST;
-            float _TexMagnifier;
+            float2 _TexParam;
             
             v2f vert (const appdata v)
             {
@@ -57,15 +57,16 @@ Shader "Unlit/BackgroundShader"
             
             float2 _GetUv(const float x, const float y)
             {
-                return float2(x / _TexMagnifier, y / _TexMagnifier);
+                return float2(x / _TexParam.x, y / _TexParam.x);
             }
             
             fixed4 frag (v2f i) : SV_Target
             {
-                const float2 uv = _GetUv(i.positionWS.x, i.positionWS.y);
+                float yPos = i.positionWS.y - _TexParam.y;
+                const float2 uv = _GetUv(i.positionWS.x, yPos);
                 
                 // sample the texture
-                fixed4 col = i.positionWS.y <= 0 ? tex2D(_MainTex, uv) : tex2D(_SkyTex, uv);
+                fixed4 col = yPos <= 0 ? tex2D(_MainTex, uv) : tex2D(_SkyTex, uv);
                 return col;
             }
 

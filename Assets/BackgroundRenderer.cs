@@ -13,9 +13,11 @@ public class BackgroundRenderer : MonoBehaviour
     private Camera _cam;
     [SerializeField]
     private float _texMagnifier = 10.0f;
+    [SerializeField]
+    private float _groundOffset = 0.0f;
 
     private Mesh _quadMesh;
-    private static readonly int TEX_MAG = Shader.PropertyToID("_TexMagnifier");
+    private static readonly int TEX_PARAM = Shader.PropertyToID("_TexParam");
 
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class BackgroundRenderer : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 camPos = _cam.transform.position;
-        _backgroundMat.SetFloat(TEX_MAG, _texMagnifier);
+        _backgroundMat.SetVector(TEX_PARAM, new Vector4(_texMagnifier, _groundOffset, 0, 0));
         float camZ = camPos.z;
 #if UNITY_EDITOR
         var sceneView = SceneView.lastActiveSceneView; 
