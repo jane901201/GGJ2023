@@ -314,6 +314,8 @@ public class GameplayPresenter : MonoBehaviour
 
     private void _Reborn()
     {
+        _DuplicateHead();
+        
         _gameplayState = GameplayState.Reborn;
         var param = _rebornMechanism.GetDest(); 
         (Vector3 dir, LineNode node) = param;
@@ -411,6 +413,12 @@ public class GameplayPresenter : MonoBehaviour
         }
         
         _StartNewSession(param);
+    }
+
+    private void _DuplicateHead()
+    {
+        Transform transform1;
+        Instantiate(_headTransform.gameObject, (transform1 = _headTransform.transform).position, transform1.rotation);
     }
 
     #region Effect
