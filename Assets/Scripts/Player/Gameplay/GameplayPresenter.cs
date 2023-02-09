@@ -147,6 +147,7 @@ public class GameplayPresenter : MonoBehaviour
 
     private void _StopGameplaySession()
     {
+        _effects.Clear();
         _lineRootEngine.Stop();
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
