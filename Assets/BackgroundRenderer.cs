@@ -39,17 +39,22 @@ public class BackgroundRenderer : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 camPos = _cam.transform.position;
+        var proj = _cam.cameraToWorldMatrix;
+        Vector3 camPos = new Vector3(proj.m03, proj.m13, proj.m23);
         _backgroundMat.SetVector(TEX_PARAM, new Vector4(_texMagnifier, _groundOffset, 0, 0));
-        float camZ = camPos.z;
+        var pos = new Vector3(camPos.x, camPos.y, camPos.z + _cam.farClipPlane);
 #if UNITY_EDITOR
-        var sceneView = SceneView.lastActiveSceneView; 
+        var sceneView = SceneView.lastActiveSceneView;
         if (sceneView != null)
         {
-            camZ = Mathf.Max(sceneView.camera.transform.position.z, camZ);
+            Matrix4x4 sceneViewCamProj = sceneView.camera.cameraToWorldMatrix;
+            var sceneViewCamPos = new Vector3(sceneViewCamProj.m03, sceneViewCamProj.m13, sceneViewCamProj.m23);
+            var sceneViewPos = new Vector3(sceneViewCamPos.x, sceneViewCamPos.y, sceneViewCamPos.z + sceneView.camera.farClipPlane);
+            if (sceneViewPos.z < pos.z)
+                pos = sceneViewCamPos;
         }
 #endif
-        Graphics.DrawMesh(_quadMesh, new Vector3(camPos.x, camPos.y, camZ + 1), Quaternion.identity, _backgroundMat, 0);
+        Graphics.DrawMesh(_quadMesh, new Vector3(pos.x, pos.y, pos.z - 0.001f), Quaternion.identity, _backgroundMat, 0);
     }
 
     private static Vector3[] _GetQuadVertexPosition(float z /*= UNITY_NEAR_CLIP_VALUE*/)
