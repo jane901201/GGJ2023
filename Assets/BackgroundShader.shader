@@ -100,13 +100,13 @@ Shader "Unlit/BackgroundShader"
             v2f vert (const appdata v)
             {
                 v2f o;
-                float z = 0.0f; 
                 float2 tex;
 #if SHADER_API_GLES
                 tex = v.positionOS;
 #else
                 tex = GetQuadVertexPosition(v.vertexID);
 #endif 
+                float z = 0.001f; 
 #if defined(UNITY_REVERSED_Z) 
                 z = 1.0f - z;
 #else
