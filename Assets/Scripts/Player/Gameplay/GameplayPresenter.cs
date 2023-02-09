@@ -328,7 +328,8 @@ public class GameplayPresenter : MonoBehaviour
             newPos = node.LineRenderer.GetPosition(node.LineRenderer.positionCount - 1);
         else
             newPos = node.Position;
-        newDir = Quaternion.FromToRotation(Vector3.right, dir);
+        Vector3 upward = Vector3.Cross(Vector3.forward, dir);
+        newDir = Quaternion.LookRotation(Vector3.forward, upward);
 
         _isResetting = true;
 

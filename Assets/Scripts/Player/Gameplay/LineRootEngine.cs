@@ -47,7 +47,9 @@ public class LineRootEngine : MonoBehaviour
             _UpdateDirection();
             Vector3 rootPos = _lineRootTransform.position;
             _lineRootTransform.position = rootPos + _currentDirection * (_gameplayPresenter.GetFinalSpeed(_speed) * Time.deltaTime);
-            _headTransform.rotation = Quaternion.FromToRotation(Vector3.right, _currentDirection);
+            var upward = Vector3.Cross(Vector3.forward, _currentDirection);
+            var headDir = Quaternion.LookRotation(Vector3.forward, upward);
+            _headTransform.rotation = headDir;
             
             await UniTask.Yield(PlayerLoopTiming.Update, token);
         }
