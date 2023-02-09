@@ -47,8 +47,9 @@ public class GameplayPresenter : MonoBehaviour
 
     [SerializeField] private float waitAnimationSeconds = 4f;
 
+    [Range(0.1f, 0.9f)]
     [SerializeField]
-    private float _angularOffset;
+    private float _maxAngularOffset;
 
     [SerializeField]
     private float _resetTime = 2f;
@@ -92,7 +93,7 @@ public class GameplayPresenter : MonoBehaviour
         //_fromAabb.Initialize(_drawerManager, _lineRoot, _parameters);
         // _rebornMechanism = _fromAabb;
         // From whole
-        _rebornMechanism = new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _angularOffset);
+        _rebornMechanism = new RandomPickOnWhole(_lineRendererManager, _lineRoot, _parameters, _maxAngularOffset);
 
         _maxDepth = 0;
         _life = _maxLife;
