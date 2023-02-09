@@ -77,7 +77,7 @@ public class GameplayPresenter : MonoBehaviour
     [SerializeField]
     private float _rebornCountdownSeconds = 3f;
     [SerializeField]
-    private Transform _headTransform;
+    private SpriteRenderer _headRenderer;
     [Range(0, 1)]
     [SerializeField]
     private float _rebornCamMoveSpan = 0.8f;
@@ -170,13 +170,14 @@ public class GameplayPresenter : MonoBehaviour
 
     private IEnumerator WaitForAnimationComplete()
     {
+        _headRenderer.enabled = false;
         yield return new WaitForSeconds(waitAnimationSeconds);
         while (!_levelManager.IsInit)
         {
             yield return null;
         }
         downLifeSpeed = _levelManager.DownLifeSpeed;
-
+        _headRenderer.enabled = true;
         _StartGameplaySession(new Vector3(0, 0, 0), new Vector3(0, -1, 0));
         _gameplayState = GameplayState.PlayerSession;
     }
@@ -336,7 +337,7 @@ public class GameplayPresenter : MonoBehaviour
 
         var camPos = _cam.transform.position;
         _lineRoot.position = newPos;
-        _headTransform.rotation = newDir;
+        _headRenderer.transform.rotation = newDir;
 
         StartCoroutine(_MoveCamFromTo(camPos, new Vector3(newPos.x, newPos.y, camPos.z)));
         StartCoroutine(_Countdown(param));
@@ -425,7 +426,7 @@ public class GameplayPresenter : MonoBehaviour
     private void _DuplicateHead()
     {
         Transform transform1;
-        Instantiate(_headTransform.gameObject, (transform1 = _headTransform.transform).position, transform1.rotation);
+        Instantiate(_headRenderer.gameObject, (transform1 = _headRenderer.transform).position, transform1.rotation);
     }
 
     private IEnumerator _MoveCamFromTo(Vector3 from, Vector3 to)
