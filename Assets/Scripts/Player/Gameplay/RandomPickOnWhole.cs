@@ -47,7 +47,7 @@ public class RandomPickOnWhole : IRebornMechanism
         normal *= Mathf.Sign(Random.Range(-1, 1));
         var vecQ = Quaternion.LookRotation(Vector3.forward, Vector3.Cross(Vector3.forward, vec));
         var normalQ = Quaternion.LookRotation(Vector3.forward, Vector3.Cross(Vector3.forward, normal));
-        var newQ = Quaternion.Lerp(normalQ, vecQ, _angularOffset);
+        var newQ = Quaternion.Lerp(normalQ, vecQ, Random.Range(0.1f, Mathf.Max(_angularOffset, 0.1f)));
         var newNormal = newQ * Vector3.right;
         return new ValueTuple<Vector3, LineNode>(newNormal, new LineNode(line, ind));
     }
