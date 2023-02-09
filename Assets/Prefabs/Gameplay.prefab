@@ -371,13 +371,14 @@ MonoBehaviour:
   _initHardness: 0
   _hardness: 0
   waitAnimationSeconds: 4
-  _angularOffset: 0.3
+  _maxAngularOffset: 0.7
   _resetTime: 2
   _maxDepth: 0
   _cam: {fileID: 1781282063}
   _zoomOutSpeed: 1
   _rebornCountdownSeconds: 3
-  _headTransform: {fileID: 4949913676355155375}
+  _headRenderer: {fileID: 1143015794009513026}
+  _rebornCamMoveSpan: 0.8
 --- !u!114 &6425771410523959924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,6 +1024,11 @@ PrefabInstance:
 --- !u!58 &902634813121505326 stripped
 CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 4789994751014202395, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+  m_PrefabInstance: {fileID: 5692469993148367925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1143015794009513026 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4693728842256537719, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
   m_PrefabInstance: {fileID: 5692469993148367925}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1147536326883798757 stripped

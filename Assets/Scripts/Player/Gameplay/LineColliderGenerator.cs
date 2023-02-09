@@ -107,7 +107,8 @@ public class LineColliderGenerator : MonoBehaviour
         Vector3 center = Vector3.Lerp(from, to, 0.5f);
         coll.size = new Vector2(Vector3.Distance(from, to), _lineParameters.LineColliderWidth);
         coll.transform.position = center;
-        coll.transform.eulerAngles = Quaternion.FromToRotation(Vector3.right, to - from).eulerAngles;
+        var upward = Vector3.Cross(Vector3.forward, to - from);
+        coll.transform.eulerAngles = Quaternion.LookRotation(Vector3.forward, upward).eulerAngles;
     }
 
     private void _BoundPoints()
