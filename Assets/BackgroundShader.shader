@@ -37,6 +37,7 @@ Shader "Unlit/BackgroundShader"
             {
                 float4 vertex : SV_POSITION;
                 float4 positionWS : TEXCOORD0;
+                //float4 positionCS : TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -47,26 +48,36 @@ Shader "Unlit/BackgroundShader"
             v2f vert (const appdata v)
             {
                 v2f o;
-                const float2 tex = GetQuadTexCoord(v.vertexID);
+                float2 tex = GetQuadVertexPosition(v.vertexID);
+                float z = 0.0f; 
+#if defined(UNITY_REVERSED_Z) 
+                z = 1.0f - z;
+#else
+                float t = tex.x;
+                tex.x = tex.y;
+                tex.y = t;
+#endif
                 float2 quadPos = 2.0f * tex - 1.0f;
-                o.vertex = float4(quadPos.x, quadPos.y, 1, 1);
+                o.vertex = float4(quadPos.x, quadPos.y, z, 1);
                 const float4x4 s = Inverse(UNITY_MATRIX_VP);
                 o.positionWS = mul(s, o.vertex);
+                //o.positionCS = o.vertex;
                 return o;
             }
             
-            float2 _GetUv(const float x, const float y)
+            float4 _GetGroundSkyUv(const float x, const float y)
             {
-                return float2(x / _TexParam.x, y / _TexParam.x);
+                float2 skyUv = float2(x / _TexParam.x, y / _TexParam.x);
+                return float4(skyUv.x, skyUv.y, skyUv.x, skyUv.y);
             }
             
             fixed4 frag (v2f i) : SV_Target
             {
-                float yPos = i.positionWS.y - _TexParam.y;
-                const float2 uv = _GetUv(i.positionWS.x, yPos);
+                const float yPos = i.positionWS.y - _TexParam.y; 
+                float4 groundUvSkyUv = _GetGroundSkyUv(i.positionWS.x, yPos);
                 
                 // sample the texture
-                fixed4 col = yPos <= 0 ? tex2D(_MainTex, uv) : tex2D(_SkyTex, uv);
+                fixed4 col = yPos <= 0 ? tex2D(_MainTex, groundUvSkyUv.xy) : tex2D(_SkyTex, groundUvSkyUv.zw);
                 return col;
             }
 
