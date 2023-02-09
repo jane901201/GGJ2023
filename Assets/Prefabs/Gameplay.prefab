@@ -371,7 +371,7 @@ MonoBehaviour:
   _initHardness: 0
   _hardness: 0
   waitAnimationSeconds: 4
-  _angularOffset: 0.4
+  _maxAngularOffset: 0.7
   _resetTime: 2
   _maxDepth: 0
   _cam: {fileID: 1781282063}
