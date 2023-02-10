@@ -24,11 +24,13 @@ public class EffectSceneObject : BaseSceneObject
         gameplayPresenter.AddHardness(Hardness);
         gameplayPresenter.AddEffect(new Effect()
         {
+            Type = Effect.EffectType.SpeedChange,
             Duration = SpeedChangeDuration,
             Value = SpeedChangeRatio,
         });
         gameplayPresenter.AddEffect(new Effect()
         {
+            Type = Effect.EffectType.LifeDownChange,
             Duration = LifeDownChangeDuration,
             Value = LifeDownChangeRatio,
         });
