@@ -48,4 +48,4 @@ MonoBehaviour:
   LineInterval: 1
   CircleRadius: 0.84
   LineColliderWidth: 0.2
-  CircleColliderRadius: 0.84
+  CircleColliderRadius: 0.4

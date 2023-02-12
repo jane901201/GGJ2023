@@ -79,6 +79,8 @@ public class GameplayPresenter : MonoBehaviour
     private float _rebornCountdownSeconds = 3f;
     [SerializeField]
     private SpriteRenderer _headRenderer;
+    [SerializeField]
+    private Transform _headTransform;
     [Range(0, 1)]
     [SerializeField]
     private float _rebornCamMoveSpan = 0.8f;
@@ -338,7 +340,7 @@ public class GameplayPresenter : MonoBehaviour
 
         var camPos = _cam.transform.position;
         _lineRoot.position = newPos;
-        _headRenderer.transform.rotation = newDir;
+        _headTransform.rotation = newDir;
 
         StartCoroutine(_MoveCamFromTo(camPos, new Vector3(newPos.x, newPos.y, camPos.z)));
         StartCoroutine(_Countdown(param));

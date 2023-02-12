@@ -362,6 +362,7 @@ MonoBehaviour:
   _zoomOutSpeed: 1
   _rebornCountdownSeconds: 3
   _headRenderer: {fileID: 1143015794009513026}
+  _headTransform: {fileID: 5037579212455803843}
   _rebornCamMoveSpan: 0.8
 --- !u!114 &6425771410523959924
 MonoBehaviour:
@@ -983,6 +984,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5244834238711992860}
     m_Modifications:
+    - target: {fileID: 742556342691230106, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -995,13 +1000,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.84
       objectReference: {fileID: 0}
+    - target: {fileID: 799007222976495606, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 856133568617701939, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_Name
       value: LineRoot
       objectReference: {fileID: 0}
     - target: {fileID: 2695072746391018114, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695072746391018114, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4689207609309145808, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_RootOrder
@@ -1049,7 +1062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4789994751014202395, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
       propertyPath: m_Radius
-      value: 0.42
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
@@ -1066,11 +1079,6 @@ SpriteRenderer:
 --- !u!4 &1147536326883798757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4689207609309145808, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
-  m_PrefabInstance: {fileID: 5692469993148367925}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4949913676355155375 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 742556342691230106, guid: ca54b8acf759091429d66ff497bc349b, type: 3}
   m_PrefabInstance: {fileID: 5692469993148367925}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5037579212455803843 stripped
@@ -1226,7 +1234,7 @@ PrefabInstance:
     - target: {fileID: 4033716210638239808, guid: 0ff6f08fb8126f04fb3cd62f07dc7a83, type: 3}
       propertyPath: _headTransform
       value: 
-      objectReference: {fileID: 4949913676355155375}
+      objectReference: {fileID: 5037579212455803843}
     - target: {fileID: 4033716210638239808, guid: 0ff6f08fb8126f04fb3cd62f07dc7a83, type: 3}
       propertyPath: _collisionSender
       value: 
