@@ -15,14 +15,5 @@ public class GameManager : MonoBehaviour
     {
         currentScore = (int)Mathf.Abs(playerTransform.position.y);
         mainGameUI.SetRootText(currentScore);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MainGameScene");
-        }
-        else if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MainGameScene2");
-        }
     }
 }
